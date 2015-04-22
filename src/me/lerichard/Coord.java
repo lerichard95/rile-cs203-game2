@@ -23,4 +23,14 @@ public class Coord {
         return ((this.x == that.x) && (this.y == that.y));
     }
 
+    /**
+     * Calculates the pinhole from a coord
+     *
+     * @return Pinhole representing the converted X Y values
+     */
+    public Pinhole CoordToPinhole(Coord coor) {
+        return new Pinhole(coor.x, coor.y);
+    }
+
+
 }
