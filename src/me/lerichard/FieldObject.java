@@ -23,6 +23,7 @@ public class FieldObject {
 
     /**
      * Changes coordinate of the FieldObject
+     *
      * @param cc The new coord to change to
      * @return Returns a new FieldObject with modified coordinates but same type
      */

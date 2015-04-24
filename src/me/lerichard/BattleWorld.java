@@ -8,9 +8,13 @@ import javalib.worldimages.WorldImage;
  */
 public class BattleWorld extends World {
     static int waitTime;
+    Player player;
+    Mob mob;
 
-
-
+    public BattleWorld(Player player, Mob mob) {
+        this.player = player;
+        this.mob = mob;
+    }
 
     @Override
     public WorldImage makeImage() {
