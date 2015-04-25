@@ -84,6 +84,6 @@ public class Player implements Actor {
      * @return
      */
     public Actor activateDefend() {
-        return new Actor(this.hitPoints, this.atkLevel, this.defPower, true);
+        return new Player(this.hitPoints, this.atkLevel, this.defPower, true);
     }
 }

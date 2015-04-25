@@ -17,31 +17,31 @@ public class BattleWorld extends World {
     }
 
     /**
-     *
      * @return
      */
-    public World switchboard(){
+    public World switchboard() {
 
     }
 
 
-    public int damageAmount(){
+    public int damageAmount() {
         return Math.abs(
                 Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL));
     }
 
 
-    public World actionMob(){
-        int choice = Math.abs(Main.RAND.nextInt(4));
+    public World actionMob() {
+        int choice = Math.abs(Main.RAND.nextInt(2));
+        // 0. Attack player
         if (choice == 0) {
             Actor newPlayer = this.player.removeHP(damageAmount());
             return new BattleWorld(newPlayer, this.mob);
         }
-        if (choice == 2) {
-            Actor newMob = ;
+        // 1. Put Mob into defense mode
+        else {
+            Actor newMob = this.mob.activateDefend();
             return new BattleWorld(this.player, newMob);
         }
-
     }
 
 
