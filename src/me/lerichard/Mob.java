@@ -7,15 +7,18 @@ public class Mob implements Actor {
     int hitPoints = FieldWorld.DEFAULT_HIT_POINTS_MAX;
     int atkLevel = FieldWorld.ATTACK_LEVEL;
     int defPower = FieldWorld.DEFENSE_LEVEL;
+    boolean isDef = false;
 
-    public Mob(int hitPoints, int atkLevel, int defPower) {
+    public Mob(int hitPoints, int atkLevel, int defPower, boolean isDef) {
         this.hitPoints = hitPoints;
         this.atkLevel = atkLevel;
         this.defPower = defPower;
+        this.isDef = isDef;
     }
 
     /**
      * String representation of the Mob state
+     *
      * @return String representing player state
      */
     public String toString() {
@@ -27,12 +30,12 @@ public class Mob implements Actor {
     }
 
     /**
-     * Adds HP to the Actor
+     * Adds HP to the mob
      *
      * @return a new Actor with added HP
      */
     public Actor addHP(int p) {
-        return new Mob(this.hitPoints + p, this.atkLevel, this.defPower);
+        return new Mob(this.hitPoints + p, this.atkLevel, this.defPower, false);
     }
 
     /**
@@ -41,24 +44,45 @@ public class Mob implements Actor {
      * @return a new Actor with removed HP
      */
     public Actor removeHP(int p) {
-        return new Mob(this.hitPoints - p, this.atkLevel, this.defPower);
+        if (this.isDef) {
+            return new Mob(this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL), this.atkLevel, this.defPower, false);
+        }
+        return new Mob(this.hitPoints - p, this.atkLevel, this.defPower, this.isDef);
     }
 
     /**
-     * Returns a
+     * Returns a dead Mob
      *
-     * @return a dead Actor
+     * @return a dead Mob
      */
     public Actor kill() {
-        return new Mob(0, this.atkLevel, this.defPower);
+        return new Mob(0, this.atkLevel, this.defPower, false);
     }
 
     /**
-     * Returns true if the Actor is alive or dead
+     * Returns true if the mob is alive or dead
      *
-     * @return true if Actor is alive
+     * @return true if Mob is alive
      */
+
     public boolean isAlive() {
         return (this.hitPoints > 0);
+    }
+
+    /**
+     * Returns true if the Actor is currently in defense mode
+     *
+     * @return
+     */
+    public boolean isDef() {
+        return this.isDef;
+    }
+
+    /**
+     * Return a Mob that is in defense mode
+     * @return
+     */
+    public Actor activateDefend() {
+        return new Mob(this.hitPoints, this.atkLevel, this.defPower, true);
     }
 }

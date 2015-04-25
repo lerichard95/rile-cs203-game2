@@ -33,4 +33,16 @@ public interface Actor {
      */
     boolean isAlive();
 
+    /**
+     * Returns true if the Actor is currently in defense mode
+     * @return
+     */
+    boolean isDef();
+
+    /**
+     * Returns an Actor that is defending
+     * @return
+     */
+    Actor activateDefend();
+
 }

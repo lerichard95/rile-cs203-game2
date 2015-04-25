@@ -47,9 +47,7 @@ public class FieldWorld extends World {
     }
 
     /**
-     * Check for collision with treasure, decide if the player will enter a battle
-     *
-     * @return
+     * @return World
      */
     @Override
     public World onTick() {
@@ -59,6 +57,7 @@ public class FieldWorld extends World {
 
     /**
      * Makes decision about whether or not a random battle should occur
+     *
      * @param steps int, number of steps taken
      * @return true if battle should occur
      */
@@ -69,15 +68,24 @@ public class FieldWorld extends World {
     }
 
     /**
-     * Adapater - if a battle should be entered
+     * Adapter - if a battle should be entered
      *
      * @return World of the battle
      */
     public World enterPossibleBattle(World nonBattleWorld) {
         if (getRandomBattle(this.stepsTaken)) {
+            // Prepare values for a random mob encounter
+            int mobHP = Math.abs(Main.RAND.nextInt(
+                    (int)(FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75) ));
+            int mobATK = Math.abs(Main.RAND.nextInt(
+                    (int)(FieldWorld.ATTACK_LEVEL * 0.75) ));
+            int mobDEF = Math.abs(Main.RAND.nextInt(
+                    (int)(FieldWorld.DEFENSE_LEVEL * 0.75) ));
+
+            Mob newMob = new Mob(mobHP, mobATK, mobDEF);
+
             return new MessageWorld("Random battle!", new BattleWorld(this.playerState, newMob));
         }
-
         // Return an unmodified world when there is not a random battle
         return nonBattleWorld;
     }
