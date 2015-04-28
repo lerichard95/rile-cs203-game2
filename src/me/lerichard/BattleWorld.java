@@ -10,11 +10,11 @@ public class BattleWorld extends World {
     static int waitTime;
 
     FieldWorld prevWorld;
-    Actor player;
-    Actor mob;
+    Player player;
+    Mob mob;
     boolean playerTurn;
 
-    public BattleWorld(FieldWorld prevWorld, Actor player, Actor mob, boolean playerTurn) {
+    public BattleWorld(FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
         this.prevWorld = prevWorld;
         this.player = player;
         this.mob = mob;
@@ -34,10 +34,24 @@ public class BattleWorld extends World {
         // If the mob dies, then show victory, decide to gift a potion
         if (!this.mob.isAlive()) {
             //TODO: Randomly decide if the player should get a potion
-            FieldWorld newFieldWorld;
-            newFieldWorld = new FieldWorld(this.player, hpPots, noTreasure, );
 
-            return new MessageWorld(, );
+            //1 in (n -1) chance that player will get a potion...
+            int n = 3;
+            int randNumber = Main.RAND.nextInt(n);
+            if (randNumber == 0) {
+                FieldWorld newFieldWorld;
+                int newPots = this.player.hpPots + 1;
+                Player newPlayerState =
+                        new Player(this.player.hitPoints,
+                                this.player.atkLevel, this.player.defPower, newPots, false);
+
+                newFieldWorld = new FieldWorld(
+                        newPlayerState, prevWorld.haveTreasure, prevWorld.fieldObjectPlayer, 0);
+
+                return new MessageWorld("Victory!", newFieldWorld);
+            } else {
+
+            }
         }
 
         // If the player dies... show game over message and allow a restart

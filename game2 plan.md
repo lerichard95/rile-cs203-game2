@@ -6,6 +6,11 @@ Create interfaces for the Actors
 Create interfaces for the field
 
 
+TODO:
+[ ] Fix all new instances of FieldWorld
+
+Generalize FieldWorld states?
+Generalize player states?
 
 #Turn in checklist
 [ ] Manual

@@ -3,7 +3,7 @@ package me.lerichard;
 import javalib.funworld.World;
 import javalib.worldimages.WorldImage;
 
-import java.util.ArrayList;
+
 
 /**
  * FieldWorld is the game mode that represents the field map
@@ -25,23 +25,23 @@ public class FieldWorld extends World {
                     Main.RAND.nextInt(MAX_FIELD_HEIGHT));
 
     // Persistent states
-    public Player playerState = new Player(DEFAULT_HP_POTS, ATTACK_LEVEL, DEFENSE_LEVEL);
-    public int hpPots = DEFAULT_HP_POTS;
+    public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX, ATTACK_LEVEL, DEFENSE_LEVEL, DEFAULT_HP_POTS, false);
+
     public boolean haveTreasure = false;
     FieldObject fieldObjectPlayer = new FieldObject(new Coord(5, 0), FieldObjectType.PLAYER);
     FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
     // TODO: Generalize the fieldObjects to a bunch of ArrayLists
-    ArrayList<FieldObject> fieldObjects;
+    // ArrayList<FieldObject> fieldObjects;
 
-
-    public FieldWorld(Player playerState, int hpPots, boolean haveTreasure,
-                      ArrayList<FieldObject> fieldObjects, FieldObject fieldObjectPlayer,
-                      int stepsTaken) {
+    // TODO: player state will hold the hpPots instead...
+    public FieldWorld(
+            Player playerState,
+            boolean haveTreasure,
+            FieldObject fieldObjectPlayer,
+            int stepsTaken) {
         this.playerState = playerState;
-        this.hpPots = hpPots;
         this.haveTreasure = haveTreasure;
-        this.fieldObjects = fieldObjects;
         this.fieldObjectPlayer = fieldObjectPlayer;
         this.stepsTaken = stepsTaken;
     }
@@ -82,13 +82,13 @@ public class FieldWorld extends World {
         if (getRandomBattle(this.stepsTaken)) {
             // Prepare values for a random mob encounter
             int mobHP = Math.abs(Main.RAND.nextInt(
-                    (int)(FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75) ));
+                    (int) (FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75)));
             int mobATK = Math.abs(Main.RAND.nextInt(
-                    (int)(FieldWorld.ATTACK_LEVEL * 0.75) ));
+                    (int) (FieldWorld.ATTACK_LEVEL * 0.75)));
             int mobDEF = Math.abs(Main.RAND.nextInt(
-                    (int)(FieldWorld.DEFENSE_LEVEL * 0.75) ));
+                    (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
-            Mob newMob = new Mob(mobHP, mobATK, mobDEF);
+            Mob newMob = new Mob(mobHP, mobATK, mobDEF, false);
 
             return new MessageWorld("Random battle!", new BattleWorld(this.playerState, newMob));
         }
@@ -187,7 +187,7 @@ public class FieldWorld extends World {
 
         return enterPossibleBattle(
                 new FieldWorld(
-                        this.playerState, this.hpPots, this.haveTreasure, this.fieldObjects,
+                        this.playerState, this.haveTreasure,
                         new FieldObject(newCoord, FieldObjectType.PLAYER), (this.stepsTaken + 1)));
     }
 

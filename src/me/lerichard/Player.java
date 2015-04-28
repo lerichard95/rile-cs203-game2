@@ -7,12 +7,15 @@ public class Player implements Actor {
     int hitPoints = FieldWorld.DEFAULT_HIT_POINTS_MAX;
     int atkLevel = FieldWorld.ATTACK_LEVEL;
     int defPower = FieldWorld.DEFENSE_LEVEL;
+    int hpPots = FieldWorld.DEFAULT_HP_POTS;
     boolean isDef = false;
 
-    public Player(int hp, int atk, int def, boolean isDef) {
+
+    public Player(int hp, int atk, int def, int hpPots, boolean isDef) {
         this.hitPoints = hp;
         this.atkLevel = atk;
         this.defPower = def;
+        this.hpPots = hpPots;
         this.isDef = isDef;
     }
 
@@ -23,7 +26,8 @@ public class Player implements Actor {
      * @return a new Actor with added HP
      */
     public Actor addHP(int p) {
-        return new Player(this.hitPoints + p, this.atkLevel, this.defPower, false);
+
+        return new Player(this.hitPoints + p, this.atkLevel, this.defPower, this.hpPots, false);
     }
 
     /**
@@ -46,9 +50,10 @@ public class Player implements Actor {
      */
     public Actor removeHP(int p) {
         if (this.isDef) {
-            return new Player(this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL), this.atkLevel, this.defPower, false);
+            int newHP = this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL);
+            return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, true);
         }
-        return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.isDef);
+        return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.hpPots, this.isDef);
     }
 
     /**
@@ -57,7 +62,8 @@ public class Player implements Actor {
      * @return a dead player
      */
     public Actor kill() {
-        return new Player(0, this.atkLevel, this.defPower, false);
+
+        return new Player(0, this.atkLevel, this.defPower, this.hpPots, false);
     }
 
     /**
@@ -84,6 +90,6 @@ public class Player implements Actor {
      * @return
      */
     public Actor activateDefend() {
-        return new Player(this.hitPoints, this.atkLevel, this.defPower, true);
+        return new Player(this.hitPoints, this.atkLevel, this.defPower, this.hpPots, true);
     }
 }
