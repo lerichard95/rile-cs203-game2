@@ -47,6 +47,12 @@ public class FieldWorld extends World {
     }
 
     /**
+     * Creates a brand-new default FieldWorld
+     */
+    public FieldWorld() {
+    }
+
+    /**
      * @return World
      */
     @Override
