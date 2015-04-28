@@ -4,7 +4,6 @@ import javalib.funworld.World;
 import javalib.worldimages.WorldImage;
 
 
-
 /**
  * FieldWorld is the game mode that represents the field map
  */
@@ -31,18 +30,21 @@ public class FieldWorld extends World {
     FieldObject fieldObjectPlayer = new FieldObject(new Coord(5, 0), FieldObjectType.PLAYER);
     FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
-    // TODO: Generalize the fieldObjects to a bunch of ArrayLists
-    // ArrayList<FieldObject> fieldObjects;
+    // TODO: Generalize the fieldObjects to objects in ArrayLists
+    //ArrayList<FieldObject> fieldObjects;
 
-    // TODO: player state will hold the hpPots instead...
     public FieldWorld(
             Player playerState,
             boolean haveTreasure,
+            Coord treasureCoord,
             FieldObject fieldObjectPlayer,
+            //  ArrayList<FieldObject> fieldObjects,
             int stepsTaken) {
         this.playerState = playerState;
         this.haveTreasure = haveTreasure;
+        this.treasureCoord = treasureCoord;
         this.fieldObjectPlayer = fieldObjectPlayer;
+        //this.fieldObjects = fieldObjects;
         this.stepsTaken = stepsTaken;
     }
 
@@ -89,8 +91,8 @@ public class FieldWorld extends World {
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
             Mob newMob = new Mob(mobHP, mobATK, mobDEF, false);
-
-            return new MessageWorld("Random battle!", new BattleWorld(this.playerState, newMob));
+            BattleWorld newBattle = new BattleWorld(this, this.playerState, newMob, false);
+            return new MessageWorld("Random battle!", newBattle);
         }
         // Return an unmodified world when there is not a random battle
         return nonBattleWorld;
@@ -128,15 +130,18 @@ public class FieldWorld extends World {
     public World movePlayerUp() {
 
         if (fieldObjectPlayer.myCoords.y >= MAX_FIELD_HEIGHT) {
-            return new FieldWorld(this.playerState, this.hpPots, this.haveTreasure,
-                    this.fieldObjects, this.fieldObjectPlayer, (this.stepsTaken + 1));
+            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                    this.fieldObjectPlayer, this.stepsTaken);
         }
 
         int newY = this.fieldObjectPlayer.myCoords.y + 1;
         Coord newCoord = new Coord(this.fieldObjectPlayer.myCoords.x, newY);
+        FieldObject newFieldPlayerObject = new FieldObject(newCoord, FieldObjectType.PLAYER);
+        int newStepsTaken = (this.stepsTaken + 1);
         return enterPossibleBattle(
-                new FieldWorld(this.playerState, this.hpPots, this.haveTreasure,
-                        this.fieldObjects, new FieldObject(newCoord, FieldObjectType.PLAYER), (this.stepsTaken + 1)));
+                new FieldWorld(
+                        this.playerState, this.haveTreasure, this.treasureCoord,
+                        newFieldPlayerObject, newStepsTaken));
     }
 
     /**
@@ -147,48 +152,49 @@ public class FieldWorld extends World {
     public World movePlayerDown() {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.y <= 0) {
-            return new FieldWorld(this.playerState, this.hpPots, this.haveTreasure,
-                    this.fieldObjects, this.fieldObjectPlayer, (this.stepsTaken + 1));
+            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                    this.fieldObjectPlayer, this.stepsTaken);
         }
         int newY = this.fieldObjectPlayer.myCoords.y - 1;
         Coord newCoord = new Coord(this.fieldObjectPlayer.myCoords.x, newY);
+        FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
+        int newStepsTaken = (this.stepsTaken + 1);
         return enterPossibleBattle(
                 new FieldWorld(
-                        this.playerState, this.hpPots, this.haveTreasure, this.fieldObjects,
-                        new FieldObject(newCoord, FieldObjectType.PLAYER), (this.stepsTaken + 1)));
+                        this.playerState, this.haveTreasure, this.treasureCoord,
+                        newFieldObjectPlayer, newStepsTaken));
     }
 
     public World movePlayerLeft() {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x <= 0) {
-            return new FieldWorld(this.playerState, this.hpPots, this.haveTreasure,
-                    this.fieldObjects, this.fieldObjectPlayer, (this.stepsTaken + 1));
+            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                    this.fieldObjectPlayer, this.stepsTaken);
         }
         int newX = this.fieldObjectPlayer.myCoords.x - 1;
         Coord newCoord = new Coord(newX, this.fieldObjectPlayer.myCoords.y);
-
+        FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
+        int newStepsTaken = (this.stepsTaken + 1);
         return enterPossibleBattle(
-                new FieldWorld(
-                        this.playerState, this.hpPots, this.haveTreasure, this.fieldObjects,
-                        new FieldObject(newCoord, FieldObjectType.PLAYER), (this.stepsTaken + 1)));
+                new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                        newFieldObjectPlayer, newStepsTaken));
     }
 
     public World movePlayerRight() {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x >= MAX_FIELD_WIDTH) {
-            return enterPossibleBattle(
-                    new FieldWorld(
-                            this.playerState, this.hpPots, this.haveTreasure,
-                            this.fieldObjects, this.fieldObjectPlayer, (this.stepsTaken + 1)));
+            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                    this.fieldObjectPlayer, this.stepsTaken);
         }
 
         int newX = this.fieldObjectPlayer.myCoords.x + 1;
         Coord newCoord = new Coord(newX, this.fieldObjectPlayer.myCoords.y);
+        FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
+        int newStepsTaken = (this.stepsTaken + 1);
 
-        return enterPossibleBattle(
-                new FieldWorld(
-                        this.playerState, this.haveTreasure,
-                        new FieldObject(newCoord, FieldObjectType.PLAYER), (this.stepsTaken + 1)));
+        return enterPossibleBattle(new FieldWorld(
+                        this.playerState, this.haveTreasure, this.treasureCoord,
+                        newFieldObjectPlayer, newStepsTaken));
     }
 
     @Override

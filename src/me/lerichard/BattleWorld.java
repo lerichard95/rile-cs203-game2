@@ -9,12 +9,12 @@ import javalib.worldimages.WorldImage;
 public class BattleWorld extends World {
     static int waitTime;
 
-    FieldWorld prevWorld;
+    World prevWorld;
     Player player;
     Mob mob;
     boolean playerTurn;
 
-    public BattleWorld(FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
+    public BattleWorld(World prevWorld, Player player, Mob mob, boolean playerTurn) {
         this.prevWorld = prevWorld;
         this.player = player;
         this.mob = mob;

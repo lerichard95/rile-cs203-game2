@@ -1,13 +1,19 @@
 #Game2 
-Finite state machine - figure out what states are needed
+"Finite state machine"
 
-Create interfaces for the Actors
+What can be generalized between Mob and Player? 
 
-Create interfaces for the field
-
+Mobs don't need to contain hp etc... is it worth generalizing if there will be more code to write/irrelevant fields???
 
 TODO:
-[ ] Fix all new instances of FieldWorld
+[ ] Fix all new instances of FieldWorld to contain new states
+[ ] TreasureCoord needs to be stored across states...
+
+[ ] Generalize FieldObject data container
+
+
+[ ] Add treasure collision detection
+	- Use adapter function for this
 
 Generalize FieldWorld states?
 Generalize player states?
