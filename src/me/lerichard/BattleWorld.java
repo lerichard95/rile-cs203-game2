@@ -9,12 +9,12 @@ import javalib.worldimages.WorldImage;
 public class BattleWorld extends World {
     static int waitTime;
 
-    World prevWorld;
+    FieldWorld prevWorld;
     Player player;
     Mob mob;
     boolean playerTurn;
 
-    public BattleWorld(World prevWorld, Player player, Mob mob, boolean playerTurn) {
+    public BattleWorld(FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
         this.prevWorld = prevWorld;
         this.player = player;
         this.mob = mob;
@@ -25,19 +25,17 @@ public class BattleWorld extends World {
     /**
      * @return
      */
-    public World switchboard() {
+    public World onTick() {
         // Only do stuff when the player and mob are alive
-        while (this.player.isAlive() && this.mob.isAlive()) {
-
-        }
 
         // If the mob dies, then show victory, decide to gift a potion
         if (!this.mob.isAlive()) {
-            //TODO: Randomly decide if the player should get a potion
 
             //1 in (n -1) chance that player will get a potion...
             int n = 3;
             int randNumber = Main.RAND.nextInt(n);
+
+            // 1. Player gets potion
             if (randNumber == 0) {
                 FieldWorld newFieldWorld;
                 int newPots = this.player.hpPots + 1;
@@ -46,11 +44,17 @@ public class BattleWorld extends World {
                                 this.player.atkLevel, this.player.defPower, newPots, false);
 
                 newFieldWorld = new FieldWorld(
-                        newPlayerState, prevWorld.haveTreasure, prevWorld.fieldObjectPlayer, 0);
+                        newPlayerState, prevWorld.haveTreasure,
+                        prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
 
                 return new MessageWorld("Victory!", newFieldWorld);
-            } else {
-
+            }
+            // 1. Player doesn't get potion
+            else {
+                FieldWorld newFieldWorld = new FieldWorld(
+                        this.player, prevWorld.haveTreasure,
+                        prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
+                return new MessageWorld("Victory!", newFieldWorld);
             }
         }
 
@@ -59,6 +63,15 @@ public class BattleWorld extends World {
             FieldWorld aWholeNewWorld = new FieldWorld();
             return new MessageWorld("GAME OVER! Press a key to start a new game.", aWholeNewWorld);
         }
+
+        // GAME ACTION:
+        // when it is not the player's turn, do the mob action
+        if (!this.playerTurn) {
+            return actionMob();
+        }
+
+        // Don't do anything if it's the player's turn— await keypress
+        return this;
 
     }
 
@@ -73,12 +86,12 @@ public class BattleWorld extends World {
         int choice = Math.abs(Main.RAND.nextInt(2));
         // 0. Attack player
         if (choice == 0) {
-            Actor newPlayer = this.player.removeHP(damageAmount());
+            Player newPlayer = this.player.removeHP(damageAmount());
             return new BattleWorld(this.prevWorld, newPlayer, this.mob, true);
         }
         // 1. Put Mob into defense mode
         else {
-            Actor newMob = this.mob.activateDefend();
+            Mob newMob = this.mob.activateDefend();
             return new BattleWorld(this.prevWorld, this.player, newMob, true);
         }
     }
@@ -94,7 +107,7 @@ public class BattleWorld extends World {
 
         // Only accept key input when it is the player's turn
         if (this.playerTurn) {
-
+            
 
         } else {
             return this;

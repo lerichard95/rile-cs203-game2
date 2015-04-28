@@ -34,7 +34,7 @@ public class Mob implements Actor {
      *
      * @return a new Actor with added HP
      */
-    public Actor addHP(int p) {
+    public Mob addHP(int p) {
         return new Mob(this.hitPoints + p, this.atkLevel, this.defPower, false);
     }
 
@@ -43,7 +43,7 @@ public class Mob implements Actor {
      *
      * @return a new Actor with removed HP
      */
-    public Actor removeHP(int p) {
+    public Mob removeHP(int p) {
         if (this.isDef) {
             return new Mob(this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL), this.atkLevel, this.defPower, false);
         }
@@ -55,7 +55,7 @@ public class Mob implements Actor {
      *
      * @return a dead Mob
      */
-    public Actor kill() {
+    public Mob kill() {
         return new Mob(0, this.atkLevel, this.defPower, false);
     }
 
@@ -80,9 +80,10 @@ public class Mob implements Actor {
 
     /**
      * Return a Mob that is in defense mode
+     *
      * @return
      */
-    public Actor activateDefend() {
+    public Mob activateDefend() {
         return new Mob(this.hitPoints, this.atkLevel, this.defPower, true);
     }
 }

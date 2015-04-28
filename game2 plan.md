@@ -6,10 +6,8 @@ What can be generalized between Mob and Player?
 Mobs don't need to contain hp etc... is it worth generalizing if there will be more code to write/irrelevant fields???
 
 TODO:
-[ ] Fix all new instances of FieldWorld to contain new states
-[ ] TreasureCoord needs to be stored across states...
-
-[ ] Generalize FieldObject data container
+[x] Fix all new instances of FieldWorld to contain new states
+[x] TreasureCoord needs to be stored across states...
 
 
 [ ] Add treasure collision detection
@@ -17,6 +15,11 @@ TODO:
 
 Generalize FieldWorld states?
 Generalize player states?
+
+# Later additions
+[ ] Generalize FieldObject data container
+[ ] Sound
+[ ] Beyonce mode
 
 #Turn in checklist
 [ ] Manual

@@ -25,7 +25,7 @@ public class Player implements Actor {
      * @param p HP to add
      * @return a new Actor with added HP
      */
-    public Actor addHP(int p) {
+    public Player addHP(int p) {
 
         return new Player(this.hitPoints + p, this.atkLevel, this.defPower, this.hpPots, false);
     }
@@ -48,7 +48,7 @@ public class Player implements Actor {
      *
      * @return a new Actor with removed HP
      */
-    public Actor removeHP(int p) {
+    public Player removeHP(int p) {
         if (this.isDef) {
             int newHP = this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL);
             return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, true);
@@ -61,7 +61,7 @@ public class Player implements Actor {
      *
      * @return a dead player
      */
-    public Actor kill() {
+    public Player kill() {
 
         return new Player(0, this.atkLevel, this.defPower, this.hpPots, false);
     }
@@ -89,7 +89,7 @@ public class Player implements Actor {
      *
      * @return
      */
-    public Actor activateDefend() {
+    public Player activateDefend() {
         return new Player(this.hitPoints, this.atkLevel, this.defPower, this.hpPots, true);
     }
 }
