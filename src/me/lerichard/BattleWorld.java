@@ -3,6 +3,8 @@ package me.lerichard;
 import javalib.funworld.World;
 import javalib.worldimages.WorldImage;
 
+import java.util.Objects;
+
 /**
  * Created by richard on 4/16/15.
  */
@@ -140,6 +142,7 @@ public class BattleWorld extends World {
 
     /**
      * String rep of BattleWorld
+     *
      * @return String
      */
     @Override
@@ -150,5 +153,22 @@ public class BattleWorld extends World {
                 ", mob=" + mob +
                 ", playerTurn=" + playerTurn +
                 '}';
+    }
+
+
+    /**
+     * Checks if two BattleWorlds are the same... can be used for all objects and null!
+     * @param o Object
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        BattleWorld that = (BattleWorld) o;
+        return Objects.equals(playerTurn, that.playerTurn) &&
+                Objects.equals(prevWorld, that.prevWorld) &&
+                Objects.equals(player, that.player) &&
+                Objects.equals(mob, that.mob);
     }
 }

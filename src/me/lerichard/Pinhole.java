@@ -1,7 +1,5 @@
 package me.lerichard;
 
-import javalib.worldimages.Posn;
-
 /**
  * Pinhole is used by the Game Worlds javalib
  */
@@ -31,5 +29,14 @@ public class Pinhole {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    /**
+     * Returns true if two Pinholes represent identical points
+     * @param that Pinhole to be compared to
+     * @return
+     */
+    public boolean equals(Pinhole that) {
+        return ((this.x == that.x) && (this.y == that.y));
     }
 }

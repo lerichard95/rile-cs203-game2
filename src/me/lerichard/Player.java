@@ -11,6 +11,14 @@ public class Player implements Actor {
     boolean isDef = false;
 
 
+    public Player(int hp, int atk, int def, int hpPots, boolean isDef) {
+        this.hitPoints = hp;
+        this.atkLevel = atk;
+        this.defPower = def;
+        this.hpPots = hpPots;
+        this.isDef = isDef;
+    }
+
     /**
      * String representation of Player state
      *
@@ -25,14 +33,6 @@ public class Player implements Actor {
                 ", hpPots=" + hpPots +
                 ", isDef=" + isDef +
                 '}';
-    }
-
-    public Player(int hp, int atk, int def, int hpPots, boolean isDef) {
-        this.hitPoints = hp;
-        this.atkLevel = atk;
-        this.defPower = def;
-        this.hpPots = hpPots;
-        this.isDef = isDef;
     }
 
     /**
@@ -94,5 +94,20 @@ public class Player implements Actor {
      */
     public Player activateDefend() {
         return new Player(this.hitPoints, this.atkLevel, this.defPower, this.hpPots, true);
+    }
+
+    /**
+     * True if two Players represent the same data
+     *
+     * @return boolean
+     */
+    public boolean equals(Player that) {
+        return
+                ((this.hitPoints == that.hitPoints)
+                        && (this.atkLevel == that.atkLevel)
+                        && (this.defPower == that.defPower)
+                        && (this.hpPots == that.hpPots)
+                        && (this.isDef == that.isDef)
+                );
     }
 }

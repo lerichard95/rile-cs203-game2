@@ -88,4 +88,18 @@ public class Mob implements Actor {
                 ", isDef=" + isDef +
                 '}';
     }
+
+    /**
+     * True if two Mobs represent the same values
+     *
+     * @param that Mob to compare with
+     * @return boolean
+     */
+    public boolean equals(Mob that) {
+        return ((this.hitPoints == that.hitPoints)
+                && (this.atkLevel == that.atkLevel)
+                && (this.defPower == that.defPower)
+                && (this.isDef == that.isDef)
+        );
+    }
 }

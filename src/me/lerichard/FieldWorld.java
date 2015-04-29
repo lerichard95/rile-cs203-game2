@@ -232,4 +232,24 @@ public class FieldWorld extends World {
                 ", fObjTreasure=" + fObjTreasure +
                 '}';
     }
+
+    /**
+     * Checks if an object is equal to FieldWorld with matching fields... works for nulls too
+     * @param o Object
+     * @return boolean
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FieldWorld that = (FieldWorld) o;
+
+        if (haveTreasure != that.haveTreasure) return false;
+        if (stepsTaken != that.stepsTaken) return false;
+        if (!playerState.equals(that.playerState)) return false;
+        if (!treasureCoord.equals(that.treasureCoord)) return false;
+        if (!fieldObjectPlayer.equals(that.fieldObjectPlayer)) return false;
+        return fObjTreasure.equals(that.fObjTreasure);
+    }
 }

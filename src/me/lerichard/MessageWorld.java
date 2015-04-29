@@ -40,6 +40,7 @@ public class MessageWorld extends World {
 
     /**
      * String rep of MessageWorld
+     *
      * @return
      */
     @Override
@@ -49,4 +50,22 @@ public class MessageWorld extends World {
                 ", next=" + next +
                 '}';
     }
+
+    /**
+     * Determines if an object and MessageWorld represent the same
+     * @param o object to compare
+     * @return boolean
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MessageWorld that = (MessageWorld) o;
+
+        if (message != null ? !message.equals(that.message) : that.message != null) return false;
+        return !(next != null ? !next.equals(that.next) : that.next != null);
+
+    }
+
 }
