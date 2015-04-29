@@ -1,7 +1,11 @@
 package me.lerichard;
 
 import javalib.funworld.World;
+import javalib.worldimages.CircleImage;
+import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
+
+import java.awt.*;
 
 /**
  * MessageWorld displays a black screen with the appropriate text.
@@ -16,6 +20,12 @@ public class MessageWorld extends World {
         this.next = nxt;
     }
 
+    @Override
+    public World onTick() {
+        Main.consolePrint("Press SPACE to continue");
+        return this;
+    }
+
     /**
      * Exit the screen and continue the game
      *
@@ -23,7 +33,8 @@ public class MessageWorld extends World {
      * @return a new World
      */
     public World onKeyEvent(String ke) {
-        if (ke.equals("Space")) {
+        if (ke.equalsIgnoreCase(" ")) {
+            Main.consolePrint("Exited MessageWorld");
             return next;
         }
         return this;
@@ -35,7 +46,7 @@ public class MessageWorld extends World {
      * @return WorldImage representing the message passed
      */
     public WorldImage makeImage() {
-        return null;
+        return new CircleImage(new Posn(10, 10), 10, Color.blue);
     }
 
     /**
@@ -53,6 +64,7 @@ public class MessageWorld extends World {
 
     /**
      * Determines if an object and MessageWorld represent the same
+     *
      * @param o object to compare
      * @return boolean
      */

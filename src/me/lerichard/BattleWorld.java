@@ -1,8 +1,11 @@
 package me.lerichard;
 
 import javalib.funworld.World;
+import javalib.worldimages.CircleImage;
+import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
 
+import java.awt.*;
 import java.util.Objects;
 
 /**
@@ -27,7 +30,12 @@ public class BattleWorld extends World {
     /**
      * @return
      */
+    @Override
     public World onTick() {
+        Main.consolePrint("--- BATTLE MODE ---");
+        Main.consolePrint("player=" + this.player.toString());
+        Main.consolePrint("mob=" + this.mob.toString());
+        Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
         // Only do stuff when the player and mob are alive
 
         // If the mob dies, then show victory, decide to gift a potion
@@ -71,12 +79,12 @@ public class BattleWorld extends World {
         // GAME ACTION:
         // when it is not the player's turn, do the mob action
         if (!this.playerTurn) {
+            Main.consolePrint("Mob's turn:");
             return actionMob();
         }
-
+        
         // Don't do anything if it's the player's turn— await keypress
         return this;
-
     }
 
 
@@ -88,6 +96,7 @@ public class BattleWorld extends World {
 
 
     public World actionMob() {
+        Main.consolePrint("Mob is deciding...");
         int choice = Math.abs(Main.RAND.nextInt(2));
         // 0. Attack player
         if (choice == 0) {
@@ -110,11 +119,12 @@ public class BattleWorld extends World {
      * @param s
      * @return
      */
+    @Override
     public World onKeyEvent(String s) {
 
         // Only accept key input when it is the player's turn
         if (this.playerTurn) {
-            Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
+
 
             // Player ATTACKs
             if (s.equalsIgnoreCase("A")) {
@@ -140,11 +150,6 @@ public class BattleWorld extends World {
             }
         }
         return this;
-    }
-
-    @Override
-    public WorldImage makeImage() {
-        return null;
     }
 
     /**
@@ -179,4 +184,14 @@ public class BattleWorld extends World {
                 Objects.equals(player, that.player) &&
                 Objects.equals(mob, that.mob);
     }
+
+    /**
+     * Draws the BattleWorld
+     *
+     * @return WorldImage
+     */
+    public WorldImage makeImage() {
+        return new CircleImage(new Posn(10, 10), 10, Color.blue);
+    }
+
 }

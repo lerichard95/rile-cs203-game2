@@ -7,7 +7,8 @@ public class Main {
     public static boolean consoleMode = true;
 
     public static void main(String[] args) {
-        //FieldWorld game = new FieldWorld().bigBang();
+        FieldWorld game = new FieldWorld();
+        game.bigBang(500, 500, 4.0);
         System.out.println("Hello world!");
     }
 

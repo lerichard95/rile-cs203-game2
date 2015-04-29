@@ -1,7 +1,11 @@
 package me.lerichard;
 
 import javalib.funworld.World;
+import javalib.worldimages.CircleImage;
+import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
+
+import java.awt.*;
 
 
 /**
@@ -59,7 +63,9 @@ public class FieldWorld extends World {
      */
     @Override
     public World onTick() {
+        Main.consolePrint("Player is at: " + fieldObjectPlayer.myCoords.toString());
         if (collideTreasure()) {
+            Main.consolePrint("Player has collected treasure!");
             FieldWorld wholeNewWorld = new FieldWorld();
             return
                     new MessageWorld("You got the treasure! Press a key to start a new game!",
@@ -76,6 +82,9 @@ public class FieldWorld extends World {
      * @return true if battle should occur
      */
     private boolean getRandomBattle(int steps) {
+        if (steps <= 0) {
+            return false;
+        }
         double coinFlip = Main.RAND.nextDouble();
         double battleThreshold = (1 - (1 / steps));
         return (coinFlip < battleThreshold);
@@ -129,6 +138,16 @@ public class FieldWorld extends World {
             return movePlayerRight();
         }
         return this;
+    }
+
+    /**
+     * Draw the FieldWorld
+     *
+     * @return WorldImage
+     */
+    public WorldImage makeImage() {
+        return new CircleImage(new Posn(10, 10), 10, Color.blue);
+
     }
 
 
@@ -220,15 +239,9 @@ public class FieldWorld extends World {
      * @return true if the player is touching treasure
      */
     public boolean collideTreasure() {
-        Main.consolePrint("Player has collected treasure!");
         return this.fieldObjectPlayer.myCoords.equals(treasureCoord);
     }
 
-
-    @Override
-    public WorldImage makeImage() {
-        return null;
-    }
 
     /**
      * String rep of FieldWorld
