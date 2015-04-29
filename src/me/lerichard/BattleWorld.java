@@ -107,12 +107,30 @@ public class BattleWorld extends World {
 
         // Only accept key input when it is the player's turn
         if (this.playerTurn) {
-            
 
-        } else {
-            return this;
+            // Player ATTACKs
+            if (s.equalsIgnoreCase("A")) {
+                Mob nm = this.mob.removeHP(damageAmount());
+                BattleWorld nbw = new BattleWorld(this.prevWorld, this.player, nm, false);
+                return nbw;
+            }
+
+            // Player DEFENDS
+            if (s.equalsIgnoreCase("D")) {
+                Player np = this.player.activateDefend();
+                BattleWorld nbwDef = new BattleWorld(this.prevWorld, np, this.mob, false);
+                return nbwDef;
+            }
+
+            if (s.equalsIgnoreCase("P")) {
+                Player npHeal = this.player.addHP(FieldWorld.HEAL_AMOUNT);
+                BattleWorld nbwHeal = new BattleWorld(this.prevWorld, npHeal, this.mob, false);
+                return nbwHeal;
+
+            }
+
         }
-
+        return this;
     }
 
     @Override

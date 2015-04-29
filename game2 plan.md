@@ -13,13 +13,18 @@ TODO:
 [ ] Add treasure collision detection
 	- Use adapter function for this
 
-Generalize FieldWorld states?
-Generalize player states?
+[ ] Research key presses
+[x] Key handling for BattleWorld
+
 
 # Later additions
 [ ] Generalize FieldObject data container
 [ ] Sound
 [ ] Beyonce mode
+
+Generalize FieldWorld states?
+Generalize player states?
+
 
 #Turn in checklist
 [ ] Manual
