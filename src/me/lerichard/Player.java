@@ -53,7 +53,7 @@ public class Player implements Actor {
      */
     public Player removeHP(int p) {
         if (this.isDef) {
-            int newHP = this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL);
+            int newHP = this.hitPoints - (int) (p * (1/FieldWorld.DEFENSE_LEVEL));
             return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, true);
         }
         return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.hpPots, this.isDef);

@@ -16,7 +16,7 @@ public class FieldWorld extends World {
 
     public static final int DEFAULT_HIT_POINTS_MAX = 100;
     public static final int ATTACK_LEVEL = 25;
-    public static final int DEFENSE_LEVEL = 10;
+    public static final int DEFENSE_LEVEL = 4;
     public static final int DEFAULT_HP_POTS = 1;
     public static final int HEAL_AMOUNT = 30;
     public static final int MAX_FIELD_HEIGHT = 12;

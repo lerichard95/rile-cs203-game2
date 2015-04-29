@@ -38,9 +38,9 @@ public class Mob implements Actor {
      */
     public Mob removeHP(int p) {
         if (this.isDef) {
-            return new Mob(this.hitPoints - (int) (p * FieldWorld.DEFENSE_LEVEL), this.atkLevel, this.defPower, false);
+            return new Mob(this.hitPoints - (int) (p - (p * (1 / FieldWorld.DEFENSE_LEVEL))), this.atkLevel, this.defPower, false);
         }
-        return new Mob(this.hitPoints - p, this.atkLevel, this.defPower, this.isDef);
+        return new Mob(this.hitPoints - p, this.atkLevel, this.defPower, false);
     }
 
     /**
