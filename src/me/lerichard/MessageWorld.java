@@ -4,6 +4,8 @@ import javalib.funworld.World;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
+import tester.IExamples;
+import tester.Tester;
 
 import java.awt.*;
 
@@ -103,5 +105,8 @@ public class MessageWorld extends World {
         return !(next != null ? !next.equals(that.next) : that.next != null);
 
     }
+
+
+
 
 }

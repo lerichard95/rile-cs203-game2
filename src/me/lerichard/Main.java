@@ -13,6 +13,7 @@ public class Main {
         FieldWorld game = new FieldWorld();
         game.bigBang(500, 500, 1);
 
+
         Main.consolePrint("WELCOME TO");
         Main.consolePrint("==========================");
         Main.consolePrint("          \"FINITE FANTASY\"        ");

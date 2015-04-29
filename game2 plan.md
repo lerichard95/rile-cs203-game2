@@ -43,13 +43,18 @@ Does the game logic need to rely on onTick? How do you make the game WAIT?
 ##Drawing Graphics
 [ ] GRAPHICS - 
 
+## TESTING
+Test only functions that do important things/give output values
+
 ## Command Line version??
 - print lines for all actions
 
 ##WRITE TESTS
-[ ] toString() everything that contains data
-[ ] Decide which functions to test 
+[x] toString() everything that contains data
 
+Decide which functions to test 
+
+Cannot test most Worlds because they rely on key inputs?	
 
 # Later additions
 [ ] Generalize FieldObject data container

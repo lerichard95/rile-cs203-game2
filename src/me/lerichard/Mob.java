@@ -3,6 +3,8 @@ package me.lerichard;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
+import tester.IExamples;
+import tester.Tester;
 
 import java.awt.*;
 
@@ -21,6 +23,7 @@ public class Mob implements Actor {
         this.defPower = defPower;
         this.isDef = isDef;
     }
+
 
     /**
      * Adds HP to the mob
@@ -118,5 +121,6 @@ public class Mob implements Actor {
     public WorldImage draw() {
         return new CircleImage(new Posn(20, 20), 10, Color.blue);
     }
+
 
 }
