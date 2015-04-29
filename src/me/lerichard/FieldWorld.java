@@ -69,6 +69,7 @@ public class FieldWorld extends World {
     public World onTick() {
 
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+            Main.consolePrint("========  Field World  ========");
             Main.consolePrint("Player moved to: " + fieldObjectPlayer.myCoords.toString());
         }
 
@@ -117,10 +118,13 @@ public class FieldWorld extends World {
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
             Mob newMob = new Mob(mobHP, mobATK, mobDEF, false);
-            BattleWorld newBattle = new BattleWorld(0,this, this.playerState, newMob, false);
+            BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
-            Main.consolePrint("Entering random battle!");
-            Main.consolePrint("newMob=" + newMob.toString());
+            if (Main.consoleMode) {
+                Main.consolePrint("Entering random battle!");
+                Main.consolePrint("player=" + this.playerState.toString());
+                Main.consolePrint("newMob=" + newMob.toString());
+            }
             return new MessageWorld(0, "Random battle!", newBattle);
         }
         // Return an unmodified world when there is not a random battle

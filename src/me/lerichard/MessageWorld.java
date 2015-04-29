@@ -27,7 +27,11 @@ public class MessageWorld extends World {
     @Override
     public World onTick() {
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
-            Main.consolePrint("Press SPACE to continue");
+            if (Main.consoleMode) {
+                Main.consolePrint("====================");
+                Main.consolePrint("Press SPACE to continue");
+                Main.consolePrint("====================");
+            }
             int newTicks = this.ticks + 1;
             MessageWorld newMsgWorld =
                     new MessageWorld(newTicks, this.message, this.next);
@@ -52,7 +56,9 @@ public class MessageWorld extends World {
      */
     public World onKeyEvent(String ke) {
         if (ke.equalsIgnoreCase(" ")) {
-            Main.consolePrint("Exited MessageWorld");
+            if (Main.consoleMode) {
+                Main.consolePrint("Exiting MessageWorld...");
+            }
             return next;
         }
         return this;

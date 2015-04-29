@@ -8,9 +8,15 @@ public class Main {
     public static boolean consoleMode = true;
 
     public static void main(String[] args) {
+
+
         FieldWorld game = new FieldWorld();
         game.bigBang(500, 500, 1);
-        System.out.println("Hello world!");
+
+        Main.consolePrint("WELCOME TO");
+        Main.consolePrint("==========================");
+        Main.consolePrint("          \"FINITE FANTASY\"        ");
+        Main.consolePrint("==========================");
     }
 
     /**

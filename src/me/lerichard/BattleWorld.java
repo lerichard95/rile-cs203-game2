@@ -34,6 +34,9 @@ public class BattleWorld extends World {
      */
     @Override
     public World onTick() {
+        if (Main.consoleMode && (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS)) {
+            Main.consolePrint("======   \"BATTLE WORLD\"    ======");
+        }
 
         // Only do stuff when the player and mob are alive
 
@@ -83,7 +86,6 @@ public class BattleWorld extends World {
         }
 
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
-            Main.consolePrint("--- BATTLE MODE ---");
             Main.consolePrint("player=" + this.player.toString());
             Main.consolePrint("mob=" + this.mob.toString());
             Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
