@@ -13,8 +13,6 @@ import java.awt.*;
  */
 public class MessageWorld extends World {
 
-    // TODO: Prevent the console from printing multiple times
-    public boolean showCurrentConsole;
     public int ticks;
 
     String message;

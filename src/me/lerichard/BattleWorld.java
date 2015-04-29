@@ -18,8 +18,10 @@ public class BattleWorld extends World {
     Player player;
     Mob mob;
     boolean playerTurn;
+    int ticks;
 
-    public BattleWorld(FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
+    public BattleWorld(int ticks, FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
+        this.ticks = ticks;
         this.prevWorld = prevWorld;
         this.player = player;
         this.mob = mob;
@@ -32,10 +34,7 @@ public class BattleWorld extends World {
      */
     @Override
     public World onTick() {
-        Main.consolePrint("--- BATTLE MODE ---");
-        Main.consolePrint("player=" + this.player.toString());
-        Main.consolePrint("mob=" + this.mob.toString());
-        Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
+
         // Only do stuff when the player and mob are alive
 
         // If the mob dies, then show victory, decide to gift a potion
@@ -52,7 +51,7 @@ public class BattleWorld extends World {
                 Player newPlayerState =
                         new Player(this.player.hitPoints,
                                 this.player.atkLevel, this.player.defPower, newPots, false);
-                newFieldWorld = new FieldWorld(
+                newFieldWorld = new FieldWorld(0,
                         newPlayerState, prevWorld.haveTreasure,
                         prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
 
@@ -62,7 +61,7 @@ public class BattleWorld extends World {
             // 1. Player doesn't get potion
             else {
                 Main.consolePrint("Player didn't receive potion. Now returning to FieldWorld...");
-                FieldWorld newFieldWorld = new FieldWorld(
+                FieldWorld newFieldWorld = new FieldWorld(0,
                         this.player, prevWorld.haveTreasure,
                         prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
                 return new MessageWorld(0, "Victory!", newFieldWorld);
@@ -83,8 +82,17 @@ public class BattleWorld extends World {
             return actionMob();
         }
 
+        if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+            Main.consolePrint("--- BATTLE MODE ---");
+            Main.consolePrint("player=" + this.player.toString());
+            Main.consolePrint("mob=" + this.mob.toString());
+            Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
+        }
+
         // Don't do anything if it's the player's turn— await keypress
-        return this;
+        int newTicks = this.ticks + 1;
+        BattleWorld nbw = new BattleWorld(newTicks, this.prevWorld, this.player, this.mob, this.playerTurn);
+        return nbw;
     }
 
 
@@ -102,13 +110,13 @@ public class BattleWorld extends World {
         if (choice == 0) {
             Main.consolePrint("Mob attacks player");
             Player newPlayer = this.player.removeHP(damageAmount());
-            return new BattleWorld(this.prevWorld, newPlayer, this.mob, true);
+            return new BattleWorld(0, this.prevWorld, newPlayer, this.mob, true);
         }
         // 1. Put Mob into defense mode
         else {
             Mob newMob = this.mob.activateDefend();
             Main.consolePrint("Mob activated defense mode!");
-            return new BattleWorld(this.prevWorld, this.player, newMob, true);
+            return new BattleWorld(0, this.prevWorld, this.player, newMob, true);
         }
     }
 
@@ -130,7 +138,7 @@ public class BattleWorld extends World {
             if (s.equalsIgnoreCase("A")) {
                 Main.consolePrint("Player attacks!");
                 Mob nm = this.mob.removeHP(damageAmount());
-                BattleWorld nbw = new BattleWorld(this.prevWorld, this.player, nm, false);
+                BattleWorld nbw = new BattleWorld(0, this.prevWorld, this.player, nm, false);
                 return nbw;
             }
 
@@ -138,14 +146,14 @@ public class BattleWorld extends World {
             if (s.equalsIgnoreCase("D")) {
                 Main.consolePrint("Player defends.");
                 Player np = this.player.activateDefend();
-                BattleWorld nbwDef = new BattleWorld(this.prevWorld, np, this.mob, false);
+                BattleWorld nbwDef = new BattleWorld(0, this.prevWorld, np, this.mob, false);
                 return nbwDef;
             }
 
             if (s.equalsIgnoreCase("P")) {
                 Main.consolePrint("Player heals.");
                 Player npHeal = this.player.addHP(FieldWorld.HEAL_AMOUNT);
-                BattleWorld nbwHeal = new BattleWorld(this.prevWorld, npHeal, this.mob, false);
+                BattleWorld nbwHeal = new BattleWorld(0, this.prevWorld, npHeal, this.mob, false);
                 return nbwHeal;
             }
         }

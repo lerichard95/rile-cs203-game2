@@ -29,6 +29,7 @@ public class FieldWorld extends World {
                     Main.RAND.nextInt(MAX_FIELD_HEIGHT));
     public boolean haveTreasure = false;
     public int stepsTaken = 0;
+    public int ticks;
     FieldObject fieldObjectPlayer = new FieldObject(new Coord(5, 0), FieldObjectType.PLAYER);
     FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
@@ -37,12 +38,14 @@ public class FieldWorld extends World {
 
 
     public FieldWorld(
+            int ticks,
             Player playerState,
             boolean haveTreasure,
             Coord treasureCoord,
             FieldObject fieldObjectPlayer,
             //  ArrayList<FieldObject> fieldObjects,
             int stepsTaken) {
+        this.ticks = ticks;
         this.playerState = playerState;
         this.haveTreasure = haveTreasure;
         this.treasureCoord = treasureCoord;
@@ -64,7 +67,11 @@ public class FieldWorld extends World {
      */
     @Override
     public World onTick() {
-        Main.consolePrint("Player is at: " + fieldObjectPlayer.myCoords.toString());
+
+        if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+            Main.consolePrint("Player moved to: " + fieldObjectPlayer.myCoords.toString());
+        }
+
         if (collideTreasure()) {
             Main.consolePrint("Player has collected treasure!");
             FieldWorld wholeNewWorld = new FieldWorld();
@@ -73,7 +80,10 @@ public class FieldWorld extends World {
                             wholeNewWorld);
         }
 
-        return this;
+        // Return a new FieldWorld and update the ticks
+        int newTicks = this.ticks + 1;
+        FieldWorld newFW = new FieldWorld(newTicks, this.playerState, this.haveTreasure, this.treasureCoord, this.fieldObjectPlayer, this.stepsTaken);
+        return newFW;
     }
 
     /**
@@ -107,7 +117,7 @@ public class FieldWorld extends World {
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
             Mob newMob = new Mob(mobHP, mobATK, mobDEF, false);
-            BattleWorld newBattle = new BattleWorld(this, this.playerState, newMob, false);
+            BattleWorld newBattle = new BattleWorld(0,this, this.playerState, newMob, false);
 
             Main.consolePrint("Entering random battle!");
             Main.consolePrint("newMob=" + newMob.toString());
@@ -161,7 +171,7 @@ public class FieldWorld extends World {
 
         if (fieldObjectPlayer.myCoords.y >= MAX_FIELD_HEIGHT) {
             Main.consolePrint("Cannot move beyond lower y bound");
-            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+            return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
 
@@ -171,7 +181,7 @@ public class FieldWorld extends World {
         int newStepsTaken = (this.stepsTaken + 1);
         Main.consolePrint("Moved player up, new FieldPlayerObject is" + newFieldPlayerObject.toString());
         return enterPossibleBattle(
-                new FieldWorld(
+                new FieldWorld(this.ticks,
                         this.playerState, this.haveTreasure, this.treasureCoord,
                         newFieldPlayerObject, newStepsTaken));
     }
@@ -185,7 +195,7 @@ public class FieldWorld extends World {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.y <= 0) {
             Main.consolePrint("Cannot move player beyond lower y bound");
-            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+            return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
         int newY = this.fieldObjectPlayer.myCoords.y - 1;
@@ -195,6 +205,7 @@ public class FieldWorld extends World {
         Main.consolePrint("Moved player down, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
         return enterPossibleBattle(
                 new FieldWorld(
+                        this.ticks,
                         this.playerState, this.haveTreasure, this.treasureCoord,
                         newFieldObjectPlayer, newStepsTaken));
     }
@@ -203,7 +214,7 @@ public class FieldWorld extends World {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x <= 0) {
             Main.consolePrint("Cannot move player beyond lower x bound");
-            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+            return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
         int newX = this.fieldObjectPlayer.myCoords.x - 1;
@@ -212,7 +223,7 @@ public class FieldWorld extends World {
         int newStepsTaken = (this.stepsTaken + 1);
         Main.consolePrint("Moved player left, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
         return enterPossibleBattle(
-                new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+                new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                         newFieldObjectPlayer, newStepsTaken));
     }
 
@@ -220,7 +231,7 @@ public class FieldWorld extends World {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x >= MAX_FIELD_WIDTH) {
             Main.consolePrint("Cannot move player beyond upper x bound");
-            return new FieldWorld(this.playerState, this.haveTreasure, this.treasureCoord,
+            return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
 
@@ -230,7 +241,7 @@ public class FieldWorld extends World {
         int newStepsTaken = (this.stepsTaken + 1);
         Main.consolePrint("Moved player right, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
         return enterPossibleBattle(new FieldWorld(
-                this.playerState, this.haveTreasure, this.treasureCoord,
+                this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                 newFieldObjectPlayer, newStepsTaken));
     }
 
