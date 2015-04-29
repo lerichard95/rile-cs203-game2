@@ -137,4 +137,18 @@ public class BattleWorld extends World {
     public WorldImage makeImage() {
         return null;
     }
+
+    /**
+     * String rep of BattleWorld
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "BattleWorld{" +
+                "prevWorld=" + prevWorld +
+                ", player=" + player +
+                ", mob=" + mob +
+                ", playerTurn=" + playerTurn +
+                '}';
+    }
 }

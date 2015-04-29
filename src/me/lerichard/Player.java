@@ -11,6 +11,22 @@ public class Player implements Actor {
     boolean isDef = false;
 
 
+    /**
+     * String representation of Player state
+     *
+     * @return String representing Player state
+     */
+    @Override
+    public String toString() {
+        return "Player{" +
+                "hitPoints=" + hitPoints +
+                ", atkLevel=" + atkLevel +
+                ", defPower=" + defPower +
+                ", hpPots=" + hpPots +
+                ", isDef=" + isDef +
+                '}';
+    }
+
     public Player(int hp, int atk, int def, int hpPots, boolean isDef) {
         this.hitPoints = hp;
         this.atkLevel = atk;
@@ -28,19 +44,6 @@ public class Player implements Actor {
     public Player addHP(int p) {
 
         return new Player(this.hitPoints + p, this.atkLevel, this.defPower, this.hpPots, false);
-    }
-
-    /**
-     * String representation of Player state
-     *
-     * @return String representing Player state
-     */
-    public String toString() {
-        return "Player{" +
-                "hitPoints=" + hitPoints +
-                ", atkLevel=" + atkLevel +
-                ", defPower=" + defPower +
-                '}';
     }
 
     /**

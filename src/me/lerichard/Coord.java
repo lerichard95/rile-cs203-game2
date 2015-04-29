@@ -33,4 +33,17 @@ public class Coord {
     }
 
 
+    /**
+     * String rep of coord
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Coord{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
 }

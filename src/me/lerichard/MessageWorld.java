@@ -37,4 +37,16 @@ public class MessageWorld extends World {
     public WorldImage makeImage() {
         return null;
     }
+
+    /**
+     * String rep of MessageWorld
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "MessageWorld{" +
+                "message='" + message + '\'' +
+                ", next=" + next +
+                '}';
+    }
 }

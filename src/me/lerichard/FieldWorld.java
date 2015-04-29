@@ -17,17 +17,14 @@ public class FieldWorld extends World {
     public static final int HEAL_AMOUNT = 30;
     public static final int MAX_FIELD_HEIGHT = 12;
     public static final int MAX_FIELD_WIDTH = 12;
-    public int stepsTaken = 0;
-
-    //TODO: generate a random coord for the treasure
-    public Coord treasureCoord =
-            new Coord(Main.RAND.nextInt(MAX_FIELD_WIDTH),
-                    Main.RAND.nextInt(MAX_FIELD_HEIGHT));
 
     // Persistent states
     public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX, ATTACK_LEVEL, DEFENSE_LEVEL, DEFAULT_HP_POTS, false);
-
+    public Coord treasureCoord =
+            new Coord(Main.RAND.nextInt(MAX_FIELD_WIDTH),
+                    Main.RAND.nextInt(MAX_FIELD_HEIGHT));
     public boolean haveTreasure = false;
+    public int stepsTaken = 0;
     FieldObject fieldObjectPlayer = new FieldObject(new Coord(5, 0), FieldObjectType.PLAYER);
     FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
@@ -56,6 +53,7 @@ public class FieldWorld extends World {
     }
 
     /**
+     * Check for treasure collision and do nothing
      * @return World
      */
     @Override
@@ -217,5 +215,21 @@ public class FieldWorld extends World {
     @Override
     public WorldImage makeImage() {
         return null;
+    }
+
+    /**
+     * String rep of FieldWorld
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "FieldWorld{" +
+                "playerState=" + playerState +
+                ", treasureCoord=" + treasureCoord +
+                ", haveTreasure=" + haveTreasure +
+                ", stepsTaken=" + stepsTaken +
+                ", fieldObjectPlayer=" + fieldObjectPlayer +
+                ", fObjTreasure=" + fObjTreasure +
+                '}';
     }
 }

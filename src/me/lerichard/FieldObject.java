@@ -32,4 +32,15 @@ public class FieldObject {
 
     }
 
+    /**
+     * String rep of FieldObject
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "FieldObject{" +
+                "myCoords=" + myCoords +
+                ", type=" + type +
+                '}';
+    }
 }

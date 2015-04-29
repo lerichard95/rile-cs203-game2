@@ -17,19 +17,6 @@ public class Mob implements Actor {
     }
 
     /**
-     * String representation of the Mob state
-     *
-     * @return String representing player state
-     */
-    public String toString() {
-        return "Mob{" +
-                "hitPoints=" + hitPoints +
-                ", atkLevel=" + atkLevel +
-                ", defPower=" + defPower +
-                '}';
-    }
-
-    /**
      * Adds HP to the mob
      *
      * @return a new Actor with added HP
@@ -85,5 +72,20 @@ public class Mob implements Actor {
      */
     public Mob activateDefend() {
         return new Mob(this.hitPoints, this.atkLevel, this.defPower, true);
+    }
+
+    /**
+     * String representation of the Mob state
+     *
+     * @return String representing player state
+     */
+    @Override
+    public String toString() {
+        return "Mob{" +
+                "hitPoints=" + hitPoints +
+                ", atkLevel=" + atkLevel +
+                ", defPower=" + defPower +
+                ", isDef=" + isDef +
+                '}';
     }
 }
