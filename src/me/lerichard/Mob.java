@@ -1,5 +1,11 @@
 package me.lerichard;
 
+import javalib.worldimages.CircleImage;
+import javalib.worldimages.Posn;
+import javalib.worldimages.WorldImage;
+
+import java.awt.*;
+
 /**
  * Created by richard on 4/15/15.
  */
@@ -102,4 +108,14 @@ public class Mob implements Actor {
                 && (this.isDef == that.isDef)
         );
     }
+
+    /**
+     * Returns a WorldImage representing the Mob
+     *
+     * @return WorldImage
+     */
+    public WorldImage draw() {
+        return new CircleImage(new Posn(20, 20), 10, Color.blue);
+    }
+
 }

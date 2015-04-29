@@ -42,7 +42,7 @@ public class Player implements Actor {
      * @return a new Actor with added HP
      */
     public Player addHP(int p) {
-
+        Main.consolePrint("Amount healed=" + p);
         return new Player(this.hitPoints + p, this.atkLevel, this.defPower, this.hpPots, false);
     }
 

@@ -18,6 +18,11 @@ TODO:
 [ ] Research key presses
 [x] Key handling for BattleWorld
 
+##Drawing Graphics
+
+
+## Command Line version??
+- print lines for all actions
 
 ##WRITE TESTS
 [ ] toString() everything that contains data
