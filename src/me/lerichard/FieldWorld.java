@@ -60,8 +60,14 @@ public class FieldWorld extends World {
      */
     @Override
     public World onTick() {
+        if (collideTreasure()) {
+            FieldWorld wholeNewWorld = new FieldWorld();
+            return
+                    new MessageWorld("You got the treasure! Press a key to start a new game!",
+                            wholeNewWorld);
+        }
 
-        return super.onTick();
+        return this;
     }
 
     /**
@@ -194,9 +200,19 @@ public class FieldWorld extends World {
         int newStepsTaken = (this.stepsTaken + 1);
 
         return enterPossibleBattle(new FieldWorld(
-                        this.playerState, this.haveTreasure, this.treasureCoord,
-                        newFieldObjectPlayer, newStepsTaken));
+                this.playerState, this.haveTreasure, this.treasureCoord,
+                newFieldObjectPlayer, newStepsTaken));
     }
+
+    /**
+     * Decides if the player has collided with treasure or not
+     *
+     * @return true if the player is touching treasure
+     */
+    public boolean collideTreasure() {
+        return this.fieldObjectPlayer.myCoords.equals(treasureCoord);
+    }
+
 
     @Override
     public WorldImage makeImage() {

@@ -31,6 +31,7 @@ public class MessageWorld extends World {
 
     /**
      * Draw text onto the screen
+     *
      * @return WorldImage representing the message passed
      */
     public WorldImage makeImage() {

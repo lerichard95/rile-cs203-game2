@@ -13,8 +13,15 @@ TODO:
 [ ] Add treasure collision detection
 	- Use adapter function for this
 
+
+
 [ ] Research key presses
 [x] Key handling for BattleWorld
+
+
+##WRITE TESTS
+[ ] toString() everything that contains data
+[ ] Decide which functions to test 
 
 
 # Later additions
@@ -31,3 +38,4 @@ Generalize player states?
 [ ] Source Code
 [ ] Console Transcript
 [ ] Essay
+"You will be graded on the persuasiveness of your essay."
