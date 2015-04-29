@@ -12,18 +12,38 @@ import java.awt.*;
  * Created by richard on 4/15/15.
  */
 public class MessageWorld extends World {
+
+    // TODO: Prevent the console from printing multiple times
+    public boolean showCurrentConsole;
+    public int ticks;
+
     String message;
     World next;
 
-    MessageWorld(String msg, World nxt) {
+    MessageWorld(int ticks, String msg, World nxt) {
+        this.ticks = ticks;
         this.message = msg;
         this.next = nxt;
     }
 
     @Override
     public World onTick() {
-        Main.consolePrint("Press SPACE to continue");
-        return this;
+        if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+            Main.consolePrint("Press SPACE to continue");
+            int newTicks = this.ticks + 1;
+            MessageWorld newMsgWorld =
+                    new MessageWorld(newTicks, this.message, this.next);
+            return newMsgWorld;
+        }
+
+        // Update the ticks after a tick has occurred
+        // Just keep updating ticks... "who cares about resources" right?
+        // Who cares if the program crashes after maximum int has occured?
+        // ¯\_(ツ)_/¯ ¯\_(ツ)_/¯ ( ‾ʖ̫‾) ( ‾ʖ̫‾) lololol
+        int newTicks = this.ticks + 1;
+        MessageWorld newMsgWorld =
+                new MessageWorld(newTicks, this.message, this.next);
+        return newMsgWorld;
     }
 
     /**

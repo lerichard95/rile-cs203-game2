@@ -57,7 +57,7 @@ public class BattleWorld extends World {
                         prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
 
                 Main.consolePrint("Player got a potion!");
-                return new MessageWorld("Victory!", newFieldWorld);
+                return new MessageWorld(0, "Victory!", newFieldWorld);
             }
             // 1. Player doesn't get potion
             else {
@@ -65,7 +65,7 @@ public class BattleWorld extends World {
                 FieldWorld newFieldWorld = new FieldWorld(
                         this.player, prevWorld.haveTreasure,
                         prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
-                return new MessageWorld("Victory!", newFieldWorld);
+                return new MessageWorld(0, "Victory!", newFieldWorld);
             }
         }
 
@@ -73,7 +73,7 @@ public class BattleWorld extends World {
         if (!this.player.isAlive()) {
             Main.consolePrint("Player died. Presenting a MessageWorld");
             FieldWorld aWholeNewWorld = new FieldWorld();
-            return new MessageWorld("GAME OVER! Press a key to start a new game.", aWholeNewWorld);
+            return new MessageWorld(0, "GAME OVER! Press a key to start a new game.", aWholeNewWorld);
         }
 
         // GAME ACTION:
@@ -82,7 +82,7 @@ public class BattleWorld extends World {
             Main.consolePrint("Mob's turn:");
             return actionMob();
         }
-        
+
         // Don't do anything if it's the player's turn— await keypress
         return this;
     }

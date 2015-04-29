@@ -1,9 +1,19 @@
 [ ] Getting better at programming - what language should I use to get better?
-[ ] How do you "export" the game to a format that is playable by other people? 
+- Realm of Racket
+
+[x] How do you "export" the game to a format that is playable by other people? 
+- Build to an executable JAR file
 
 
-[ ] What kind of programming is HTML/CSS anyway??
-[ ] How do you test HTML/CSS ? Is there a way to do that? 
+PROBLEM WITH STATES- having to make enormous constructors—
+is there a way to fix this issue? 
+Does generalizing the state into its own class solve these problems? Sounds like a design pattern...  
+- No way to do this in Java... must change the constructor for all new instances. 
+
+[x] What kind of programming is HTML/CSS anyway??
+- markup languages— no real programming because it's just descriptions of things— no control flow etc...
+[x] How do you test HTML/CSS ? Is there a way to do that? 
+- impossible to test because programs don't have "errors" just unintended side-effects 
 
 #Game2 
 "Finite state machine"
@@ -13,6 +23,14 @@ Mobs don't need to contain hp etc... is it worth generalizing if there will be m
 
 TODO:
 Does the game logic need to rely on onTick? How do you make the game WAIT?
+- don't use sleep
+- To do nothing: Just return the same instance 
+	- Hold onto ticks by adding a value to a field at every onTick...
+	- Only hold onto a certain amount of ticks, display a message for the first... 10 ticks for example.
+	- 
+
+[ ] Console version: make a boolean that is updated for every World 
+- Change all of the constructors 
 
 [x] Fix all new instances of FieldWorld to contain new states
 [x] TreasureCoord needs to be stored across states...

@@ -7,7 +7,6 @@ import javalib.worldimages.WorldImage;
 
 import java.awt.*;
 
-
 /**
  * FieldWorld is the game mode that represents the field map
  */
@@ -23,7 +22,8 @@ public class FieldWorld extends World {
     public static final int MAX_FIELD_WIDTH = 12;
 
     // Persistent states
-    public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX, ATTACK_LEVEL, DEFENSE_LEVEL, DEFAULT_HP_POTS, false);
+    public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX,
+            ATTACK_LEVEL, DEFENSE_LEVEL, DEFAULT_HP_POTS, false);
     public Coord treasureCoord =
             new Coord(Main.RAND.nextInt(MAX_FIELD_WIDTH),
                     Main.RAND.nextInt(MAX_FIELD_HEIGHT));
@@ -34,6 +34,7 @@ public class FieldWorld extends World {
 
     // TODO: Generalize the fieldObjects to objects in ArrayLists
     //ArrayList<FieldObject> fieldObjects;
+
 
     public FieldWorld(
             Player playerState,
@@ -68,7 +69,7 @@ public class FieldWorld extends World {
             Main.consolePrint("Player has collected treasure!");
             FieldWorld wholeNewWorld = new FieldWorld();
             return
-                    new MessageWorld("You got the treasure! Press a key to start a new game!",
+                    new MessageWorld(0, "You got the treasure! Press a key to start a new game!",
                             wholeNewWorld);
         }
 
@@ -110,7 +111,7 @@ public class FieldWorld extends World {
 
             Main.consolePrint("Entering random battle!");
             Main.consolePrint("newMob=" + newMob.toString());
-            return new MessageWorld("Random battle!", newBattle);
+            return new MessageWorld(0, "Random battle!", newBattle);
         }
         // Return an unmodified world when there is not a random battle
         return nonBattleWorld;

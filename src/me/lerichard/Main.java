@@ -3,6 +3,7 @@ package me.lerichard;
 import java.util.Random;
 
 public class Main {
+    public static final int SHOW_MESSAGE_FOR_N_TICKS = 4;
     public static Random RAND = new Random();
     public static boolean consoleMode = true;
 
