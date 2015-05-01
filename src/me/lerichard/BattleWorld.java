@@ -11,6 +11,7 @@ import java.util.Objects;
  */
 public class BattleWorld extends World {
     static int waitTime;
+    static int FONT_SIZE;
 
     FieldWorld prevWorld;
     Player player;
@@ -221,9 +222,12 @@ public class BattleWorld extends World {
 
     public WorldImage playerStats() {
 
-        TextImage player = new TextImage(new Posn(50, 250), "PLAYER", 12, 0, Color.WHITE);
-        RectangleImage bg = new RectangleImage(new Posn(50, 250), 200, 100, Color.BLACK);
-        WorldImage stats = new OverlayImages(player, bg);
+        // height of a line is 14
+        int lineNum = 0;
+
+        TextImage player = new TextImage(new Coord(0, 0).CoordToPinhole(), "PLAYER", BattleWorld.FONT_SIZE, 0, Color.WHITE);
+        RectangleImage bg = new RectangleImage(new Coord(0, 0).CoordToPinhole(), 200, 100, Color.BLACK);
+        WorldImage stats = new OverlayImages(bg, player);
         return stats;
     }
 

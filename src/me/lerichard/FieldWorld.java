@@ -11,25 +11,27 @@ import java.awt.*;
  * FieldWorld is the game mode that represents the field map
  */
 public class FieldWorld extends World {
-    public static final int FIELD_OBJECT_RADIUS = 40;
     public static final int DEFAULT_HIT_POINTS_MAX = 100;
     public static final int ATTACK_LEVEL = 25;
-    public static final int DEFENSE_LEVEL = 4;
+    public static final int DEFENSE_LEVEL = 2;
     public static final int DEFAULT_HP_POTS = 1;
     public static final int HEAL_AMOUNT = 30;
-    public static final int MAX_FIELD_HEIGHT = 12;
-    public static final int MAX_FIELD_WIDTH = 12;
+
+    public static final int FIELD_OBJECT_DIAMETER = 40;
+    public static final int FIELD_OBJECT_RADIUS = FIELD_OBJECT_DIAMETER / 2;
+    public static final int MAX_FIELD_HEIGHT = 10;
+    public static final int MAX_FIELD_WIDTH = 10;
 
     // Persistent states
     public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX,
             ATTACK_LEVEL, DEFAULT_HP_POTS, false);
-    public Coord treasureCoord =
-            new Coord(Main.RAND.nextInt(MAX_FIELD_WIDTH),
-                    Main.RAND.nextInt(MAX_FIELD_HEIGHT));
     public boolean haveTreasure = false;
     public int stepsTaken = 0;
     public int ticks;
-    FieldObject fieldObjectPlayer = new FieldObject(new Coord(5, 0), FieldObjectType.PLAYER);
+    public int treasureX = (Main.RAND.nextInt(MAX_FIELD_WIDTH - 1));
+    public int treasureY = (Main.RAND.nextInt(MAX_FIELD_HEIGHT - 1));
+    public Coord treasureCoord = new Coord(treasureX, treasureY);
+    FieldObject fieldObjectPlayer = new FieldObject(new Coord(0, 0), FieldObjectType.PLAYER);
     FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
     // TODO: Generalize the fieldObjects to objects in ArrayLists
@@ -164,8 +166,8 @@ public class FieldWorld extends World {
         //Treasure image: that is what you are!
         DiskImage treasure =
                 new DiskImage(
-                        this.treasureCoord.CoordToPinhole(),
-                        FieldWorld.FIELD_OBJECT_RADIUS, Color.YELLOW);
+                        this.treasureCoord.toBlockPinhole(),
+                        FieldWorld.FIELD_OBJECT_DIAMETER / 2, Color.YELLOW);
         return new OverlayImages(
                 this.fieldObjectPlayer.makeImage(),
                 treasure

@@ -35,7 +35,6 @@ public class FieldObject {
      */
     public FieldObject newCoords(Coord cc) {
         return new FieldObject(cc, this.type);
-
     }
 
 
@@ -58,16 +57,16 @@ public class FieldObject {
      * @return
      */
     public WorldImage makeImage() {
-        WorldImage output = new FrameImage(this.myCoords.CoordToPinhole(),
-                FieldWorld.FIELD_OBJECT_RADIUS, FieldWorld.FIELD_OBJECT_RADIUS, Color.BLACK);
+        WorldImage output = new FrameImage(this.myCoords.toBlockPinhole(),
+                FieldWorld.FIELD_OBJECT_DIAMETER, FieldWorld.FIELD_OBJECT_RADIUS, Color.BLACK);
 
         if (this.type.equals(FieldObjectType.TREASURE)) {
-            output = new DiskImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+            output = new DiskImage(this.myCoords.toBlockPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
                     Color.yellow);
         }
 
         if (this.type.equals(FieldObjectType.PLAYER)) {
-            output = new DiskImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+            output = new DiskImage(this.myCoords.toBlockPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
                     Color.blue);
         }
         return output;

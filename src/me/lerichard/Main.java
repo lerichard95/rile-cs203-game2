@@ -20,8 +20,8 @@ public class Main {
 
         Tester.run(e);
 
-        int windowWidth = FieldWorld.MAX_FIELD_WIDTH * FieldWorld.FIELD_OBJECT_RADIUS;
-        int windowHeight = FieldWorld.MAX_FIELD_HEIGHT * FieldWorld.FIELD_OBJECT_RADIUS;
+        int windowWidth = FieldWorld.MAX_FIELD_WIDTH * FieldWorld.FIELD_OBJECT_DIAMETER;
+        int windowHeight = FieldWorld.MAX_FIELD_HEIGHT * FieldWorld.FIELD_OBJECT_DIAMETER;
         game.bigBang(windowWidth, windowHeight, .15);
 
         if (Main.consoleMode) {

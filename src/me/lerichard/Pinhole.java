@@ -16,11 +16,11 @@ public class Pinhole extends Posn {
      * @param yy
      */
     public Pinhole(int xx, int yy) {
-        super((xx * FieldWorld.FIELD_OBJECT_RADIUS) + (FieldWorld.FIELD_OBJECT_RADIUS / 2),
-                (yy * FieldWorld.FIELD_OBJECT_RADIUS) +
-                        (FieldWorld.FIELD_OBJECT_RADIUS / 2));
-        this.x = (xx * FieldWorld.FIELD_OBJECT_RADIUS) + (FieldWorld.FIELD_OBJECT_RADIUS / 2);
-        this.y = (yy * FieldWorld.FIELD_OBJECT_RADIUS) + (FieldWorld.FIELD_OBJECT_RADIUS / 2);
+        super((xx * FieldWorld.FIELD_OBJECT_DIAMETER) + FieldWorld.FIELD_OBJECT_RADIUS,
+                (yy * FieldWorld.FIELD_OBJECT_DIAMETER) +
+                        FieldWorld.FIELD_OBJECT_RADIUS);
+        this.x = (xx * FieldWorld.FIELD_OBJECT_DIAMETER) + FieldWorld.FIELD_OBJECT_RADIUS;
+        this.y = (yy * FieldWorld.FIELD_OBJECT_DIAMETER) + FieldWorld.FIELD_OBJECT_RADIUS;
 
     }
 
