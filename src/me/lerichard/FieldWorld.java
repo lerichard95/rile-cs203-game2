@@ -178,7 +178,7 @@ public class FieldWorld extends World {
                     this.fieldObjectPlayer, this.stepsTaken);
         }
 
-        int newY = this.fieldObjectPlayer.myCoords.y + 1;
+        int newY = this.fieldObjectPlayer.myCoords.y - 1;
         Coord newCoord = new Coord(this.fieldObjectPlayer.myCoords.x, newY);
         FieldObject newFieldPlayerObject = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);
@@ -197,11 +197,11 @@ public class FieldWorld extends World {
     public World movePlayerDown() {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.y <= 0) {
-            Main.consolePrint("Cannot move player beyond lower y bound");
+            Main.consolePrint("Cannot move player beyond upper y bound");
             return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
-        int newY = this.fieldObjectPlayer.myCoords.y - 1;
+        int newY = this.fieldObjectPlayer.myCoords.y + 1;
         Coord newCoord = new Coord(this.fieldObjectPlayer.myCoords.x, newY);
         FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);

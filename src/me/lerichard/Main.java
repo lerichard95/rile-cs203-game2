@@ -20,7 +20,7 @@ public class Main {
 
         Tester.run(e);
 
-        game.bigBang(500, 500, 1);
+        game.bigBang(500, 500, .5);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");

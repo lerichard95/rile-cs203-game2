@@ -30,12 +30,14 @@ public class BattleWorld extends World {
 
 
     /**
+     * Controls main BattleWorld game logic. Exits to field and rewards player
+     *
      * @return
      */
     @Override
     public World onTick() {
         if (Main.consoleMode && (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS)) {
-            Main.consolePrint("======   \"BATTLE WORLD\"    ======");
+            Main.consolePrint("======   BATTLE WORLD    ======");
         }
 
         // Only do stuff when the player and mob are alive
@@ -98,6 +100,13 @@ public class BattleWorld extends World {
     }
 
 
+    /**
+     * Calculates the damage that should be done.
+     * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
+     * Can never hit 0, just in case 0 triggers a divide by zero error.
+     *
+     * @return
+     */
     public int damageAmount() {
         // Add 1 so that there is never a divide by zero issue caused by defense calcuation
         int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
@@ -106,7 +115,11 @@ public class BattleWorld extends World {
         return dmg;
     }
 
-
+    /**
+     * Returns a BattleWorld reflecting what action the Mob took
+     *
+     * @return BattleWorld
+     */
     public World actionMob() {
         Main.consolePrint("Mob is deciding...");
         int choice = Math.abs(Main.RAND.nextInt(2));
@@ -126,10 +139,11 @@ public class BattleWorld extends World {
 
 
     /**
-     * Event handler for keypresses
+     * Event handler for keypresses. Only returns when playerTurn is true.
+     * returns appropriate BattleWorld state based on desired player action
      *
-     * @param s
-     * @return
+     * @param s Keypress
+     * @return BattleWorld
      */
     @Override
     public World onKeyEvent(String s) {
@@ -184,7 +198,7 @@ public class BattleWorld extends World {
      * Checks if two BattleWorlds are the same... can be used for all objects and null!
      *
      * @param o Object
-     * @return
+     * @return boolean
      */
     @Override
     public boolean equals(Object o) {
