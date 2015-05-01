@@ -1,6 +1,6 @@
 package me.lerichard;
 
-import javalib.worldimages.CircleImage;
+import javalib.worldimages.DiskImage;
 import javalib.worldimages.FrameImage;
 import javalib.worldimages.WorldImage;
 
@@ -62,12 +62,12 @@ public class FieldObject {
                 FieldWorld.FIELD_OBJECT_RADIUS, FieldWorld.FIELD_OBJECT_RADIUS, Color.BLACK);
 
         if (this.type.equals(FieldObjectType.TREASURE)) {
-            output = new CircleImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+            output = new DiskImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
                     Color.yellow);
         }
 
         if (this.type.equals(FieldObjectType.PLAYER)) {
-            output = new CircleImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+            output = new DiskImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
                     Color.blue);
         }
         return output;

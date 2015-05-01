@@ -1,9 +1,7 @@
 package me.lerichard;
 
 import javalib.funworld.World;
-import javalib.worldimages.CircleImage;
-import javalib.worldimages.Posn;
-import javalib.worldimages.WorldImage;
+import javalib.worldimages.*;
 
 import java.awt.*;
 import java.util.Objects;
@@ -217,7 +215,20 @@ public class BattleWorld extends World {
      * @return WorldImage
      */
     public WorldImage makeImage() {
-        return new CircleImage(new Posn(10, 10), 10, Color.blue);
+        return new OverlayImages(playerStats(), this.mob.draw());
+        //return new CircleImage(new Posn(10, 10), 10, Color.blue);
     }
+
+    public WorldImage playerStats() {
+
+        TextImage player = new TextImage(new Posn(50, 250), "PLAYER", 12, 0, Color.WHITE);
+        RectangleImage bg = new RectangleImage(new Posn(50, 250), 200, 100, Color.BLACK);
+        WorldImage stats = new OverlayImages(player, bg);
+        return stats;
+    }
+
+    /*public WorldImage mobStats() {
+
+    }*/
 
 }

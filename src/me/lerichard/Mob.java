@@ -131,7 +131,9 @@ public class Mob implements Actor {
      * @return WorldImage
      */
     public WorldImage draw() {
+
         return new CircleImage(new Posn(20, 20), 10, Color.blue);
+
     }
 
 
