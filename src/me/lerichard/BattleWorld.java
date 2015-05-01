@@ -1,7 +1,10 @@
 package me.lerichard;
 
 import javalib.funworld.World;
-import javalib.worldimages.*;
+import javalib.worldimages.OverlayImages;
+import javalib.worldimages.RectangleImage;
+import javalib.worldimages.TextImage;
+import javalib.worldimages.WorldImage;
 
 import java.awt.*;
 import java.util.Objects;
@@ -12,12 +15,14 @@ import java.util.Objects;
 public class BattleWorld extends World {
     static int waitTime;
     static int FONT_SIZE;
+    static String LABEL_PLAYER = "Player";
 
     FieldWorld prevWorld;
     Player player;
     Mob mob;
     boolean playerTurn;
     int ticks;
+
 
     public BattleWorld(int ticks, FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
         this.ticks = ticks;
@@ -225,7 +230,7 @@ public class BattleWorld extends World {
         // height of a line is 14
         int lineNum = 0;
 
-        TextImage player = new TextImage(new Coord(0, 0).CoordToPinhole(), "PLAYER", BattleWorld.FONT_SIZE, 0, Color.WHITE);
+        TextImage player = new TextImage(new Coord(0, 0).CoordToPinhole(), BattleWorld.LABEL_PLAYER, BattleWorld.FONT_SIZE, 0, Color.WHITE);
         RectangleImage bg = new RectangleImage(new Coord(0, 0).CoordToPinhole(), 200, 100, Color.BLACK);
         WorldImage stats = new OverlayImages(bg, player);
         return stats;

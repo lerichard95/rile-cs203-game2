@@ -1,9 +1,7 @@
 package me.lerichard;
 
 import javalib.funworld.World;
-import javalib.worldimages.CircleImage;
-import javalib.worldimages.Posn;
-import javalib.worldimages.WorldImage;
+import javalib.worldimages.*;
 
 import java.awt.*;
 
@@ -81,7 +79,12 @@ public class MessageWorld extends World {
      * @return WorldImage representing the message passed
      */
     public WorldImage makeImage() {
-        return new CircleImage(new Posn(10, 10), 10, Color.blue);
+        Posn windowPinhole = new Posn(Main.WINDOW_WIDTH / 2, Main.WINDOW_WIDTH / 2);
+        WorldImage background = new RectangleImage(windowPinhole, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, Color.BLACK);
+        WorldImage message = new TextImage(windowPinhole, this.message, 24, 0, Color.WHITE);
+        return new OverlayImages(background, message);
+
+
     }
 
     /**
