@@ -12,7 +12,6 @@ import java.awt.*;
  */
 public class FieldWorld extends World {
     public static final int FIELD_OBJECT_RADIUS = 40;
-
     public static final int DEFAULT_HIT_POINTS_MAX = 100;
     public static final int ATTACK_LEVEL = 25;
     public static final int DEFENSE_LEVEL = 4;
@@ -23,7 +22,7 @@ public class FieldWorld extends World {
 
     // Persistent states
     public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX,
-            ATTACK_LEVEL, DEFENSE_LEVEL, DEFAULT_HP_POTS, false);
+            ATTACK_LEVEL, DEFAULT_HP_POTS, false);
     public Coord treasureCoord =
             new Coord(Main.RAND.nextInt(MAX_FIELD_WIDTH),
                     Main.RAND.nextInt(MAX_FIELD_HEIGHT));
@@ -117,7 +116,7 @@ public class FieldWorld extends World {
             int mobDEF = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
-            Mob newMob = new Mob(mobHP, mobATK, mobDEF, false);
+            Mob newMob = new Mob(mobHP, mobATK, false);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
             if (Main.consoleMode) {

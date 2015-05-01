@@ -11,10 +11,9 @@ public class Player implements Actor {
     boolean isDef = false;
 
 
-    public Player(int hp, int atk, int def, int hpPots, boolean isDef) {
+    public Player(int hp, int atk, int hpPots, boolean isDef) {
         this.hitPoints = hp;
         this.atkLevel = atk;
-        this.defPower = def;
         this.hpPots = hpPots;
         this.isDef = isDef;
     }
@@ -52,9 +51,9 @@ public class Player implements Actor {
         // Strategic: only heal up to the specifed maximum HP... discard excess
         int newHP = this.hitPoints + p;
         if (newHP <= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
-            return new Player(newHP, this.atkLevel, this.defPower, newPots, false);
+            return new Player(newHP, this.atkLevel, newPots, false);
         }
-        return new Player(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, this.defPower, newPots, false);
+        return new Player(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, newPots, false);
     }
 
     /**
@@ -64,10 +63,15 @@ public class Player implements Actor {
      */
     public Player removeHP(int p) {
         if (this.isDef) {
-            int newHP = this.hitPoints - (int) (p - (p * (1 / this.defPower)));
-            return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, false);
+            int damage = p;
+            // Only apply damage buffer if necessary
+            if (p >= FieldWorld.DEFENSE_LEVEL) {
+                damage = (int) (p / FieldWorld.DEFENSE_LEVEL);
+            }
+            int newHP = this.hitPoints - damage;
+            return new Player(newHP, this.atkLevel, this.hpPots, false);
         }
-        return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.hpPots, false);
+        return new Player(this.hitPoints - p, this.atkLevel, this.hpPots, false);
     }
 
     /**
@@ -77,7 +81,7 @@ public class Player implements Actor {
      */
     public Player kill() {
 
-        return new Player(0, this.atkLevel, this.defPower, this.hpPots, false);
+        return new Player(0, this.atkLevel, this.hpPots, false);
     }
 
     /**
@@ -104,7 +108,7 @@ public class Player implements Actor {
      * @return
      */
     public Player activateDefend() {
-        return new Player(this.hitPoints, this.atkLevel, this.defPower, this.hpPots, true);
+        return new Player(this.hitPoints, this.atkLevel, this.hpPots, true);
     }
 
     /**

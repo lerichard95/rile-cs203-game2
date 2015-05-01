@@ -10,15 +10,17 @@ public class Main {
 
     // consoleMode enables a game logic testing version of the game
     // that does not rely on graphics.
-    public static boolean consoleMode = false;
+    public static boolean consoleMode = true;
 
     public static void main(String[] args) {
 
 
         FieldWorld game = new FieldWorld();
         Examples e = new Examples();
+
         Tester.run(e);
-        //game.bigBang(500, 500, 1);
+
+        game.bigBang(500, 500, 1);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");

@@ -15,7 +15,7 @@ public class Mob implements Actor {
     int defPower = FieldWorld.DEFENSE_LEVEL;
     boolean isDef = false;
 
-    public Mob(int hitPoints, int atkLevel, int defPower, boolean isDef) {
+    public Mob(int hitPoints, int atkLevel, boolean isDef) {
         this.hitPoints = hitPoints;
         this.atkLevel = atkLevel;
         this.defPower = defPower;
@@ -29,7 +29,7 @@ public class Mob implements Actor {
      * @return a new Actor with added HP
      */
     public Mob addHP(int p) {
-        return new Mob(this.hitPoints + p, this.atkLevel, this.defPower, false);
+        return new Mob(this.hitPoints + p, this.atkLevel, false);
     }
 
     /**
@@ -39,10 +39,14 @@ public class Mob implements Actor {
      */
     public Mob removeHP(int p) {
         if (this.isDef) {
-            int newHP = this.hitPoints - (int) (p - (p * (1 / this.defPower)));
-            return new Mob(newHP, this.atkLevel, this.defPower, false);
+            int damage = p;
+            if (p >= FieldWorld.DEFENSE_LEVEL) {
+                damage = (int) (p / FieldWorld.DEFENSE_LEVEL);
+            }
+            int newHP = this.hitPoints - damage;
+            return new Mob(newHP, this.atkLevel, false);
         }
-        return new Mob(this.hitPoints - p, this.atkLevel, this.defPower, false);
+        return new Mob(this.hitPoints - p, this.atkLevel, false);
     }
 
     /**
@@ -51,7 +55,7 @@ public class Mob implements Actor {
      * @return a dead Mob
      */
     public Mob kill() {
-        return new Mob(0, this.atkLevel, this.defPower, false);
+        return new Mob(0, this.atkLevel, false);
     }
 
     /**
@@ -79,7 +83,7 @@ public class Mob implements Actor {
      * @return
      */
     public Mob activateDefend() {
-        return new Mob(this.hitPoints, this.atkLevel, this.defPower, true);
+        return new Mob(this.hitPoints, this.atkLevel, true);
     }
 
     /**

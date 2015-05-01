@@ -53,7 +53,7 @@ public class BattleWorld extends World {
                 int newPots = this.player.hpPots + 1;
                 Player newPlayerState =
                         new Player(this.player.hitPoints,
-                                this.player.atkLevel, this.player.defPower, newPots, false);
+                                this.player.atkLevel, newPots, false);
                 newFieldWorld = new FieldWorld(0,
                         newPlayerState, prevWorld.haveTreasure,
                         prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);

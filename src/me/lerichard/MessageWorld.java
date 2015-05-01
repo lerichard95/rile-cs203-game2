@@ -4,8 +4,6 @@ import javalib.funworld.World;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
-import tester.IExamples;
-import tester.Tester;
 
 import java.awt.*;
 
@@ -29,15 +27,21 @@ public class MessageWorld extends World {
     @Override
     public World onTick() {
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+            /*
             if (Main.consoleMode) {
                 Main.consolePrint("====================");
                 Main.consolePrint("Press SPACE to continue");
                 Main.consolePrint("====================");
             }
+            */
             int newTicks = this.ticks + 1;
             MessageWorld newMsgWorld =
                     new MessageWorld(newTicks, this.message, this.next);
             return newMsgWorld;
+        }
+
+        if (this.ticks > 2) {
+            return this.next;
         }
 
         // Update the ticks after a tick has occurred
@@ -48,6 +52,8 @@ public class MessageWorld extends World {
         MessageWorld newMsgWorld =
                 new MessageWorld(newTicks, this.message, this.next);
         return newMsgWorld;
+
+
     }
 
     /**
@@ -57,13 +63,16 @@ public class MessageWorld extends World {
      * @return a new World
      */
     public World onKeyEvent(String ke) {
+        /*
         if (ke.equalsIgnoreCase(" ")) {
             if (Main.consoleMode) {
                 Main.consolePrint("Exiting MessageWorld...");
             }
             return next;
         }
+        */
         return this;
+
     }
 
     /**
@@ -105,8 +114,6 @@ public class MessageWorld extends World {
         return !(next != null ? !next.equals(that.next) : that.next != null);
 
     }
-
-
 
 
 }
