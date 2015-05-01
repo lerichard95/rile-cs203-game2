@@ -1,5 +1,11 @@
 package me.lerichard;
 
+import javalib.worldimages.CircleImage;
+import javalib.worldimages.FrameImage;
+import javalib.worldimages.WorldImage;
+
+import java.awt.*;
+
 /**
  * Created by richard on 4/17/15.
  */
@@ -32,8 +38,10 @@ public class FieldObject {
 
     }
 
+
     /**
      * String rep of FieldObject
+     *
      * @return String
      */
     @Override
@@ -43,4 +51,26 @@ public class FieldObject {
                 ", type=" + type +
                 '}';
     }
+
+    /**
+     * Returns a WorldImage of the FieldObject
+     *
+     * @return
+     */
+    public WorldImage makeImage() {
+        WorldImage output = new FrameImage(this.myCoords.CoordToPinhole(),
+                FieldWorld.FIELD_OBJECT_RADIUS, FieldWorld.FIELD_OBJECT_RADIUS, Color.BLACK);
+
+        if (this.type.equals(FieldObjectType.TREASURE)) {
+            output = new CircleImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+                    Color.yellow);
+        }
+
+        if (this.type.equals(FieldObjectType.PLAYER)) {
+            output = new CircleImage(this.myCoords.CoordToPinhole(), FieldWorld.FIELD_OBJECT_RADIUS,
+                    Color.blue);
+        }
+        return output;
+    }
+
 }

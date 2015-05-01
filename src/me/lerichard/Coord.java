@@ -1,17 +1,22 @@
 package me.lerichard;
 
+import javalib.worldimages.Posn;
+
 /**
  * Coord represents an X/Y coordinate.
  * Created by richard on 4/17/15.
  */
-public class Coord {
+public class Coord extends Posn {
     int x;
     int y;
 
     public Coord(int x, int y) {
+        // What does super actually do in this context??
+        super(x, y);
         this.x = x;
         this.y = y;
     }
+
 
     /**
      * Returns true if this coord equals the other coord
@@ -28,8 +33,8 @@ public class Coord {
      *
      * @return Pinhole representing the converted X Y values
      */
-    public Pinhole CoordToPinhole(Coord coor) {
-        return new Pinhole(coor.x, coor.y);
+    public Pinhole CoordToPinhole() {
+        return new Pinhole(this.x, this.y);
     }
 
 

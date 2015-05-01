@@ -2,7 +2,7 @@ package me.lerichard;
 
 import javalib.funworld.World;
 import javalib.worldimages.CircleImage;
-import javalib.worldimages.Posn;
+import javalib.worldimages.OverlayImages;
 import javalib.worldimages.WorldImage;
 
 import java.awt.*;
@@ -161,7 +161,11 @@ public class FieldWorld extends World {
      * @return WorldImage
      */
     public WorldImage makeImage() {
-        return new CircleImage(new Posn(10, 10), 10, Color.blue);
+        //Treasure image: that is what you are!
+        CircleImage treasure = new CircleImage(this.treasureCoord, FieldWorld.FIELD_OBJECT_RADIUS, Color.YELLOW);
+        return new OverlayImages(this.fieldObjectPlayer.makeImage(),
+                treasure
+        );
 
     }
 

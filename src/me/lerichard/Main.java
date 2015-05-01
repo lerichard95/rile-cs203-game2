@@ -20,7 +20,9 @@ public class Main {
 
         Tester.run(e);
 
-        game.bigBang(500, 500, .15);
+        int windowWidth = FieldWorld.MAX_FIELD_WIDTH * FieldWorld.FIELD_OBJECT_RADIUS;
+        int windowHeight = FieldWorld.MAX_FIELD_HEIGHT * FieldWorld.FIELD_OBJECT_RADIUS;
+        game.bigBang(windowWidth, windowHeight, .15);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");
