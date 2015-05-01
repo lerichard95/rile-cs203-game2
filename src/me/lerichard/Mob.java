@@ -44,9 +44,13 @@ public class Mob implements Actor {
                 damage = (int) (p / FieldWorld.DEFENSE_LEVEL);
             }
             int newHP = this.hitPoints - damage;
+            if (Main.consoleMode) {
+                Main.consolePrint("Mob defended! Actual damage:" + damage);
+            }
             return new Mob(newHP, this.atkLevel, false);
         }
-        return new Mob(this.hitPoints - p, this.atkLevel, false);
+        int newHPP = this.hitPoints - p;
+        return new Mob(newHPP, this.atkLevel, false);
     }
 
     /**
@@ -65,7 +69,7 @@ public class Mob implements Actor {
      */
 
     public boolean isAlive() {
-        return (this.hitPoints > 0);
+        return (this.hitPoints >= 0);
     }
 
     /**

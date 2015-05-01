@@ -20,12 +20,12 @@ public class Main {
 
         Tester.run(e);
 
-        game.bigBang(500, 500, .5);
+        game.bigBang(500, 500, .15);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");
             Main.consolePrint("==========================");
-            Main.consolePrint("          \"FINITE FANTASY\"        ");
+            Main.consolePrint("              FINITE FANTASY          ");
             Main.consolePrint("==========================");
         }
     }

@@ -69,6 +69,9 @@ public class Player implements Actor {
                 damage = (int) (p / FieldWorld.DEFENSE_LEVEL);
             }
             int newHP = this.hitPoints - damage;
+            if (Main.consoleMode) {
+                Main.consolePrint("Player defended! Actual damage:" + damage);
+            }
             return new Player(newHP, this.atkLevel, this.hpPots, false);
         }
         return new Player(this.hitPoints - p, this.atkLevel, this.hpPots, false);

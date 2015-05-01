@@ -29,7 +29,7 @@ Does the game logic need to rely on onTick? How do you make the game WAIT?
 	- Only hold onto a certain amount of ticks, display a message for the first... 10 ticks for example.
 	- 
 
-[ ] Console version: make a boolean that is updated for every World 
+[x] Console version: make a boolean that is updated for every World 
 - Change all of the constructors 
 
 [x] Fix all new instances of FieldWorld to contain new states

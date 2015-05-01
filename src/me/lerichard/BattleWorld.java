@@ -40,6 +40,7 @@ public class BattleWorld extends World {
             Main.consolePrint("======   BATTLE WORLD    ======");
         }
 
+
         // Only do stuff when the player and mob are alive
 
         // If the mob dies, then show victory, decide to gift a potion
@@ -87,7 +88,8 @@ public class BattleWorld extends World {
             return actionMob();
         }
 
-        if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
+
+        if (Main.consoleMode && (this.playerTurn) && (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS)) {
             Main.consolePrint("player=" + this.player.toString());
             Main.consolePrint("mob=" + this.mob.toString());
             Main.consolePrint("Player's turn! Press A to attack, D to defend, and P to heal.");
@@ -150,8 +152,6 @@ public class BattleWorld extends World {
 
         // Only accept key input when it is the player's turn
         if (this.playerTurn) {
-
-
             // Player ATTACKs
             if (s.equalsIgnoreCase("A")) {
                 Main.consolePrint("Player attacks!");

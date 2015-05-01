@@ -27,13 +27,13 @@ public class MessageWorld extends World {
     @Override
     public World onTick() {
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
-            /*
+
             if (Main.consoleMode) {
-                Main.consolePrint("====================");
-                Main.consolePrint("Press SPACE to continue");
+                Main.consolePrint("====== Message =======");
+                Main.consolePrint(this.message);
                 Main.consolePrint("====================");
             }
-            */
+
             int newTicks = this.ticks + 1;
             MessageWorld newMsgWorld =
                     new MessageWorld(newTicks, this.message, this.next);

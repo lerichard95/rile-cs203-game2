@@ -70,14 +70,15 @@ public class FieldWorld extends World {
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
             Main.consolePrint("========  Field World  ========");
             Main.consolePrint("Player moved to: " + fieldObjectPlayer.myCoords.toString());
+            Main.consolePrint("Treasure= " + this.treasureCoord.toString());
         }
 
         if (collideTreasure()) {
             Main.consolePrint("Player has collected treasure!");
             FieldWorld wholeNewWorld = new FieldWorld();
-            return
-                    new MessageWorld(0, "You got the treasure! Press a key to start a new game!",
-                            wholeNewWorld);
+            MessageWorld msg2 = new MessageWorld(0, "You become famous and everyone loves you!", wholeNewWorld);
+            MessageWorld msg1 = new MessageWorld(0, "YOU WIN! You found the treasure!", msg2);
+            return msg1;
         }
 
         // Return a new FieldWorld and update the ticks
@@ -102,7 +103,7 @@ public class FieldWorld extends World {
     }
 
     /**
-     * Adapter - if a battle should be entered
+     * Adapter - decide if a battle should be entered
      *
      * @return World of the battle
      */
@@ -172,7 +173,7 @@ public class FieldWorld extends World {
      */
     public World movePlayerUp() {
 
-        if (fieldObjectPlayer.myCoords.y >= MAX_FIELD_HEIGHT) {
+        if (fieldObjectPlayer.myCoords.y <= 0) {
             Main.consolePrint("Cannot move beyond lower y bound");
             return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
@@ -196,7 +197,7 @@ public class FieldWorld extends World {
      */
     public World movePlayerDown() {
         // Only move player if they are within bounds
-        if (fieldObjectPlayer.myCoords.y <= 0) {
+        if (fieldObjectPlayer.myCoords.y >= MAX_FIELD_HEIGHT) {
             Main.consolePrint("Cannot move player beyond upper y bound");
             return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
