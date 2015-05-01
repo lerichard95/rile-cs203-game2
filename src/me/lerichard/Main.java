@@ -1,23 +1,31 @@
 package me.lerichard;
 
+import tester.Tester;
+
 import java.util.Random;
 
 public class Main {
     public static final int SHOW_MESSAGE_FOR_N_TICKS = 1;
     public static Random RAND = new Random();
-    public static boolean consoleMode = true;
+
+    // consoleMode enables a game logic testing version of the game
+    // that does not rely on graphics.
+    public static boolean consoleMode = false;
 
     public static void main(String[] args) {
 
 
         FieldWorld game = new FieldWorld();
-        game.bigBang(500, 500, 1);
+        Examples e = new Examples();
+        Tester.run(e);
+        //game.bigBang(500, 500, 1);
 
-
-        Main.consolePrint("WELCOME TO");
-        Main.consolePrint("==========================");
-        Main.consolePrint("          \"FINITE FANTASY\"        ");
-        Main.consolePrint("==========================");
+        if (Main.consoleMode) {
+            Main.consolePrint("WELCOME TO");
+            Main.consolePrint("==========================");
+            Main.consolePrint("          \"FINITE FANTASY\"        ");
+            Main.consolePrint("==========================");
+        }
     }
 
     /**

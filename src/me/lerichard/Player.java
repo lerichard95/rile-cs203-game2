@@ -43,7 +43,18 @@ public class Player implements Actor {
      */
     public Player addHP(int p) {
         Main.consolePrint("Amount healed=" + p);
-        return new Player(this.hitPoints + p, this.atkLevel, this.defPower, this.hpPots, false);
+        int newPots = this.hpPots;
+        //Only decrement hpPots if it is greater than 0
+        if (this.hpPots > 0) {
+            newPots = this.hpPots - 1;
+        }
+
+        // Strategic: only heal up to the specifed maximum HP... discard excess
+        int newHP = this.hitPoints + p;
+        if (newHP <= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
+            return new Player(newHP, this.atkLevel, this.defPower, newPots, false);
+        }
+        return new Player(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, this.defPower, newPots, false);
     }
 
     /**
@@ -54,9 +65,9 @@ public class Player implements Actor {
     public Player removeHP(int p) {
         if (this.isDef) {
             int newHP = this.hitPoints - (int) (p - (p * (1 / this.defPower)));
-            return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, true);
+            return new Player(newHP, this.atkLevel, this.defPower, this.hpPots, false);
         }
-        return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.hpPots, this.isDef);
+        return new Player(this.hitPoints - p, this.atkLevel, this.defPower, this.hpPots, false);
     }
 
     /**
@@ -101,13 +112,18 @@ public class Player implements Actor {
      *
      * @return boolean
      */
-    public boolean equals(Player that) {
-        return
-                ((this.hitPoints == that.hitPoints)
-                        && (this.atkLevel == that.atkLevel)
-                        && (this.defPower == that.defPower)
-                        && (this.hpPots == that.hpPots)
-                        && (this.isDef == that.isDef)
-                );
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (hitPoints != player.hitPoints) return false;
+        if (atkLevel != player.atkLevel) return false;
+        if (defPower != player.defPower) return false;
+        if (hpPots != player.hpPots) return false;
+        return isDef == player.isDef;
+
     }
 }

@@ -3,8 +3,6 @@ package me.lerichard;
 import javalib.worldimages.CircleImage;
 import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
-import tester.IExamples;
-import tester.Tester;
 
 import java.awt.*;
 
@@ -105,12 +103,18 @@ public class Mob implements Actor {
      * @param that Mob to compare with
      * @return boolean
      */
-    public boolean equals(Mob that) {
-        return ((this.hitPoints == that.hitPoints)
-                && (this.atkLevel == that.atkLevel)
-                && (this.defPower == that.defPower)
-                && (this.isDef == that.isDef)
-        );
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Mob mob = (Mob) o;
+
+        if (hitPoints != mob.hitPoints) return false;
+        if (atkLevel != mob.atkLevel) return false;
+        if (defPower != mob.defPower) return false;
+        return isDef == mob.isDef;
+
     }
 
     /**

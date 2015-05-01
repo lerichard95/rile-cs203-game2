@@ -1,5 +1,5 @@
-#Treasure Arena
-Battle Arena is divided into three main modes:
+#Finite Fantasy
+Finite Fantasy is divided into three main modes:
 
 ##Menus
 ####Start
@@ -19,7 +19,7 @@ The player is in battle with a mob in this mode.
 
 During their turn, the player may:
 [A] Attack - attempt to deal damage to the mob
-[D] Defend - reduce the next mob hit by 50%
+[D] Defend - reduce the next mob hit
 [P] Potion - recover a percentage of the player's HP
 
 The mob will attack the player on its turn.
