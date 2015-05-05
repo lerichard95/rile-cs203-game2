@@ -18,14 +18,16 @@ public class Examples {
      */
     public void tests(Tester t) {
         testActorAddHP(t);
-        testMobRemoveHP(t);
-        testMobIsAlive(t);
+        testActorRemoveHP(t);
+        testActorIsAlive(t);
     }
 
     /**
      * Tests the addHP() method for Actor
      */
     public void testActorAddHP(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt(FieldWorld.DEFAULT_HIT_POINTS_MAX));
         int healInt = 1 + Math.abs(Main.RAND.nextInt(FieldWorld.DEFAULT_HIT_POINTS_MAX));
         int expectHP = randInt1 + healInt;
@@ -33,8 +35,8 @@ public class Examples {
             expectHP = FieldWorld.DEFAULT_HIT_POINTS_MAX;
         }
         boolean randBool1 = Main.RAND.nextBoolean();
-        Actor testPlayer1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
-        Actor testExpect1 = new Actor(expectHP, randInt1, randInt1, false, ActorType.MOB, randInt1 - 1);
+        Actor testPlayer1 = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
+        Actor testExpect1 = new Actor(expectHP, randInt1, randInt1, false, randType, randInt1 - 1);
         t.checkExpect(testPlayer1.addHP(healInt), testExpect1, "Player addHP()");
     }
 
@@ -43,7 +45,7 @@ public class Examples {
      *
      * @param t
      */
-    public void testMobRemoveHP(Tester t) {
+    public void testActorRemoveHP(Tester t) {
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         int randInt2 = 1 + Main.RAND.nextInt(randInt1);
         int expectInt = randInt1 - randInt2;
@@ -81,7 +83,7 @@ public class Examples {
      *
      * @param t
      */
-    public void testMobIsAlive(Tester t) {
+    public void testActorIsAlive(Tester t) {
         int randInt1 = Main.RAND.nextInt();
         boolean randBool1 = true;
         if (randInt1 <= 0) {
@@ -96,7 +98,7 @@ public class Examples {
      *
      * @param t
      */
-    public void testMobIsDef(Tester t) {
+    public void testActorIsDef(Tester t) {
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
         Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
@@ -122,7 +124,7 @@ public class Examples {
      *
      * @param t
      */
-    public void testMobEquals(Tester t) {
+    public void testActorEquals(Tester t) {
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
         Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
@@ -133,105 +135,6 @@ public class Examples {
         t.checkExpect(testMob1.equals(null), false, "Actor equals() - null input");
     }
 
-
-    //********************
-//
-//
-//    /**
-//     * Tests the addHP() method for Player
-//     */
-//    public void testPlayerAddHP(Tester t) {
-//        int randInt1 = 1 + Math.abs(Main.RAND.nextInt(FieldWorld.DEFAULT_HIT_POINTS_MAX));
-//        int healInt = 1 + Math.abs(Main.RAND.nextInt(FieldWorld.DEFAULT_HIT_POINTS_MAX));
-//        int expectHP = randInt1 + healInt;
-//        if (expectHP >= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
-//            expectHP = FieldWorld.DEFAULT_HIT_POINTS_MAX;
-//        }
-//        boolean randBool1 = Main.RAND.nextBoolean();
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, randBool1);
-//        Player testExpect1 = new Player(expectHP, randInt1, randInt1 - 1, false);
-//        t.checkExpect(testPlayer1.addHP(healInt), testExpect1, "Player addHP()");
-//    }
-//
-//    /**
-//     * Test method for Player removeHP()
-//     *
-//     * @param t
-//     */
-//    public void testPlayerRemoveHP(Tester t) {
-//        int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
-//        int randInt2 = 1 + Main.RAND.nextInt(randInt1);
-//        int expectInt = randInt1 - randInt2;
-//        //Defense OFF
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, false);
-//        Player testExpect1 = new Player(expectInt, randInt1, randInt1, false);
-//        t.checkExpect(testPlayer1.removeHP(randInt2), testExpect1, "Player removeHP()");
-//
-//        //Defense ON - Checking for divide by zero caused by casting
-//        int expectDamageDef = randInt2;
-//        if (randInt2 >= FieldWorld.DEFENSE_LEVEL) {
-//            expectDamageDef = (int) (randInt2 / FieldWorld.DEFENSE_LEVEL);
-//        }
-//        int expectHPDef = randInt1 - expectDamageDef;
-//        Player testPlayer2 = new Player(randInt1, randInt1, randInt1, true);
-//        Player testExpect2 = new Player(expectHPDef, randInt1, randInt1, false);
-//        t.checkExpect(testPlayer2.removeHP(randInt2), testExpect2, "Player removeHP() - defense mode");
-//
-//        int randIntZero = Math.abs(Main.RAND.nextInt(FieldWorld.DEFENSE_LEVEL));
-//        int expectDamageDef2 = randIntZero;
-//        if (randInt2 >= FieldWorld.DEFENSE_LEVEL) {
-//            expectDamageDef = (int) (randIntZero / FieldWorld.DEFENSE_LEVEL);
-//        }
-//        int expectHPDef2 = randInt1 - expectDamageDef2;
-//        Player testPlayer3 = new Player(randInt1, randInt1, randInt1, true);
-//        Player testExpect3 = new Player(expectHPDef2, randInt1, randInt1, false);
-//        t.checkExpect(testPlayer3.removeHP(randIntZero), testExpect3,
-//                "Player removeHP() - defense mode: divide by zero case");
-//
-//
-//    }
-//
-//    /**
-//     * Test method for Player isAlive()
-//     *
-//     * @param t
-//     */
-//    public void testPlayerIsAlive(Tester t) {
-//        int randInt1 = Main.RAND.nextInt();
-//        boolean randBool1 = true;
-//        if (randInt1 <= 0) {
-//            randBool1 = false;
-//        }
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, randBool1);
-//        t.checkExpect(testPlayer1.isAlive(), randBool1, "Player isAlive()");
-//    }
-//
-//    /**
-//     * Test method for Player isDef()
-//     *
-//     * @param t
-//     */
-//    public void testPlayerIsDef(Tester t) {
-//        int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
-//        boolean randBool1 = Main.RAND.nextBoolean();
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, randBool1);
-//        t.checkExpect(testPlayer1.isDef(), randBool1, "Player isDef()");
-//    }
-//
-//    /**
-//     * Tester method for Player activateDefend()
-//     *
-//     * @param t
-//     */
-//    public void testPlayerActivateDefend(Tester t) {
-//        int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
-//        boolean randBool1 = Main.RAND.nextBoolean();
-//        boolean expect = true;
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, randBool1);
-//        Player testExpect = new Player(randInt1, randInt1, randInt1, expect);
-//        t.checkExpect(testPlayer1.activateDefend(), testExpect, "Player activateDefend()");
-//    }
-//
 //    /**
 //     * Test method for Player equals()
 //     *

@@ -29,7 +29,6 @@ public class MessageWorld extends World {
             if (Main.consoleMode) {
                 Main.consolePrint("====== Message =======");
                 Main.consolePrint(this.message);
-                Main.consolePrint("====================");
             }
 
             int newTicks = this.ticks + 1;
