@@ -23,8 +23,9 @@ public class FieldWorld extends World {
     public static final int MAX_FIELD_WIDTH = 10;
 
     // Persistent states
-    public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX,
-            ATTACK_LEVEL, DEFAULT_HP_POTS, false);
+    public Actor playerState =
+            new Actor(DEFAULT_HIT_POINTS_MAX,
+            ATTACK_LEVEL, DEFAULT_HP_POTS, false, ActorType.PLAYER);
     public boolean haveTreasure = false;
     public int stepsTaken = 0;
     public int ticks;
@@ -40,7 +41,7 @@ public class FieldWorld extends World {
 
     public FieldWorld(
             int ticks,
-            Player playerState,
+            Actor playerState,
             boolean haveTreasure,
             Coord treasureCoord,
             FieldObject fieldObjectPlayer,
@@ -119,7 +120,8 @@ public class FieldWorld extends World {
             int mobDEF = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
-            Mob newMob = new Mob(mobHP, mobATK, false);
+            // TODO: Mob pots??
+            Actor newMob = new Actor(mobHP, mobATK, 0, false, ActorType.MOB);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
             if (Main.consoleMode) {
