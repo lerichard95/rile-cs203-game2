@@ -61,6 +61,7 @@ public class Player implements Actor {
      *
      * @return a new Actor with removed HP
      */
+
     public Player removeHP(int p) {
         if (this.isDef) {
             int damage = p;
