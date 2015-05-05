@@ -250,7 +250,7 @@ public class Examples {
      */
     public void testBattleKeyEvent(Tester t) {
         boolean testBool1 = true;
-        int randInt1 = 1+ Main.RAND.nextInt(99);
+        int randInt1 = 1 + Main.RAND.nextInt(99);
         FieldWorld prevWorld = new FieldWorld();
         Player testPlayer1 = new Player(randInt1, randInt1, randInt1, testBool1);
         Mob testMob1 = new Mob(randInt1, randInt1, testBool1);
@@ -264,21 +264,22 @@ public class Examples {
         testBw1 = testBw1.onKeyEvent("A");
         Mob expectMob1 = new Mob(expectHP1, randInt1, false);
         BattleWorld expectBw1 = new BattleWorld(0, prevWorld, testPlayer1, expectMob1, false);
+
         //(expectMob1.hitPoints < testMob1.hitPoints);
-        //t.checkExpect(testBw1.onKeyEvent(" "));
+        t.checkExpect((testBw1.onKeyEvent("A") instanceof BattleWorld), true, "onKeyEvent() - SPACEBAR");
 
         // Defend
-
+        t.checkExpect((testBw1.onKeyEvent("D") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
 
         // Heal
+        t.checkExpect((testBw1.onKeyEvent("H") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
 
     }
 
     public void testBattleDamageAmount(Tester t) {
         t.checkExpect(
-        (BattleWorld.damageAmount() < FieldWorld.ATTACK_LEVEL), true, "BattleWorld.damageAmount()");
+                (BattleWorld.damageAmount() < FieldWorld.ATTACK_LEVEL), true, "BattleWorld.damageAmount()");
     }
-
 
 
 }
