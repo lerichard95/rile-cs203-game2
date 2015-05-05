@@ -32,6 +32,20 @@ public class BattleWorld extends World {
         this.playerTurn = playerTurn;
     }
 
+    /**
+     * Calculates the damage that should be done.
+     * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
+     * Can never hit 0, just in case 0 triggers a divide by zero error.
+     *
+     * @return
+     */
+    public static int damageAmount() {
+        // Add 1 so that there is never a divide by zero issue caused by defense calcuation
+        int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
+
+        Main.consolePrint("Damage =" + dmg);
+        return dmg;
+    }
 
     /**
      * Controls main BattleWorld game logic. Exits to field and rewards player
@@ -60,11 +74,11 @@ public class BattleWorld extends World {
                 int newPots = this.player.hpPots + 1;
                 Actor newPlayerState =
                         new Actor(this.player.hitPoints,
-                                this.player.atkLevel, newPots, false, this.player.type);
+                                this.player.atkLevel, this.player.defPower, false, this.player.type, newPots);
                 newFieldWorld =
                         new FieldWorld(0,
-                        newPlayerState, prevWorld.haveTreasure,
-                        prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
+                                newPlayerState, prevWorld.haveTreasure,
+                                prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
 
                 Main.consolePrint("Player got a potion!");
                 return new MessageWorld(0, "Victory!", newFieldWorld);
@@ -104,22 +118,6 @@ public class BattleWorld extends World {
         int newTicks = this.ticks + 1;
         BattleWorld nbw = new BattleWorld(newTicks, this.prevWorld, this.player, this.mob, this.playerTurn);
         return nbw;
-    }
-
-
-    /**
-     * Calculates the damage that should be done.
-     * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
-     * Can never hit 0, just in case 0 triggers a divide by zero error.
-     *
-     * @return
-     */
-    public static int damageAmount() {
-        // Add 1 so that there is never a divide by zero issue caused by defense calcuation
-        int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
-
-        Main.consolePrint("Damage =" + dmg);
-        return dmg;
     }
 
     /**

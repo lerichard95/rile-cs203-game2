@@ -18,9 +18,10 @@ public class Actor {
     ActorType type;
 
 
-    public Actor(int hp, int atk, int hpPots, boolean isDef, ActorType type) {
+    public Actor(int hp, int atk, int defPower, boolean isDef, ActorType type, int hpPots) {
         this.hitPoints = hp;
         this.atkLevel = atk;
+        this.defPower = defPower;
         this.hpPots = hpPots;
         this.isDef = isDef;
         this.type = type;
@@ -59,9 +60,9 @@ public class Actor {
         // Strategic: only heal up to the specifed maximum HP... discard excess
         int newHP = this.hitPoints + p;
         if (newHP <= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
-            return new Actor(newHP, this.atkLevel, newPots, false, this.type);
+            return new Actor(newHP, this.atkLevel, this.defPower, false, this.type, newPots);
         }
-        return new Actor(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, newPots, false, this.type);
+        return new Actor(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, this.defPower, false, this.type, newPots);
     }
 
     /**
@@ -73,16 +74,16 @@ public class Actor {
         if (this.isDef) {
             int damage = p;
             // Only apply damage buffer if necessary
-            if (p >= FieldWorld.DEFENSE_LEVEL) {
-                damage = (int) (p / FieldWorld.DEFENSE_LEVEL);
+            if (p >= this.defPower) {
+                damage = (int) (p / this.defPower);
             }
             int newHP = this.hitPoints - damage;
             if (Main.consoleMode) {
                 Main.consolePrint("Player defended! Actual damage:" + damage);
             }
-            return new Actor(newHP, this.atkLevel, this.hpPots, false, this.type);
+            return new Actor(newHP, this.atkLevel, this.defPower, false, this.type, this.hpPots);
         }
-        return new Actor(this.hitPoints - p, this.atkLevel, this.hpPots, false, this.type);
+        return new Actor(this.hitPoints - p, this.atkLevel, this.defPower, false, this.type, this.hpPots);
     }
 
     /**
@@ -92,7 +93,7 @@ public class Actor {
      */
     public Actor kill() {
 
-        return new Actor(0, this.atkLevel, this.hpPots, false, this.type);
+        return new Actor(0, this.atkLevel, this.defPower, false, this.type, this.hpPots);
     }
 
     /**
@@ -119,8 +120,8 @@ public class Actor {
      * @return
      */
     public Actor activateDefend() {
-        return new Actor(this.hitPoints, this.atkLevel, this.hpPots, true
-                , this.type);
+        return new Actor(this.hitPoints, this.atkLevel, this.defPower, true, this.type, this.hpPots
+        );
     }
 
     /**
