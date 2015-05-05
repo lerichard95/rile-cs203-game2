@@ -113,11 +113,11 @@ public class BattleWorld extends World {
      *
      * @return
      */
-    public int damageAmount() {
+    public static int damageAmount() {
         // Add 1 so that there is never a divide by zero issue caused by defense calcuation
         int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
 
-        Main.consolePrint("Damage dealt=" + dmg);
+        Main.consolePrint("Damage =" + dmg);
         return dmg;
     }
 

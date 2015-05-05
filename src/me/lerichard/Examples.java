@@ -1,5 +1,6 @@
 package me.lerichard;
 
+import javalib.funworld.World;
 import tester.Tester;
 
 /**
@@ -19,6 +20,7 @@ public class Examples {
     public void tests(Tester t) {
         testMobAddHP(t);
         testMobRemoveHP(t);
+        testMobIsAlive(t);
     }
 
     /**
@@ -241,6 +243,41 @@ public class Examples {
         t.checkExpect(testPlayer1.equals(null), false, "Player equals() - null input");
     }
 
+    /**
+     * Test for BattleWorld key events
+     *
+     * @param t
+     */
+    public void testBattleKeyEvent(Tester t) {
+        boolean testBool1 = true;
+        int randInt1 = 1+ Main.RAND.nextInt(99);
+        FieldWorld prevWorld = new FieldWorld();
+        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, testBool1);
+        Mob testMob1 = new Mob(randInt1, randInt1, testBool1);
+        World testBw1 = new BattleWorld(randInt1, prevWorld, testPlayer1, testMob1, testBool1);
+
+        // Not possible to test the exact output of testBw1 because we can't examine specific fields of
+        // a superclass
+        // Attack
+
+        int expectHP1 = 0;
+        testBw1 = testBw1.onKeyEvent("A");
+        Mob expectMob1 = new Mob(expectHP1, randInt1, false);
+        BattleWorld expectBw1 = new BattleWorld(0, prevWorld, testPlayer1, expectMob1, false);
+        //(expectMob1.hitPoints < testMob1.hitPoints);
+        //t.checkExpect(testBw1.onKeyEvent(" "));
+
+        // Defend
+
+
+        // Heal
+
+    }
+
+    public void testBattleDamageAmount(Tester t) {
+        t.checkExpect(
+        (BattleWorld.damageAmount() < FieldWorld.ATTACK_LEVEL), true, "BattleWorld.damageAmount()");
+    }
 
 
 
