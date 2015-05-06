@@ -91,6 +91,7 @@ public class FieldWorld extends World {
     }
 
     /**
+     * Helper function to enterPossibleBattle()
      * Makes decision about whether or not a random battle should occur
      *
      * @param steps int, number of steps taken
@@ -117,11 +118,10 @@ public class FieldWorld extends World {
                     (int) (FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75)));
             int mobATK = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.ATTACK_LEVEL * 0.75)));
+            //TODO: Mobs can have 75% of the defense that player does...
             int mobDEF = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
-
-            // TODO: Mob pots??
-            Actor newMob = new Actor(mobHP, mobATK, DEFENSE_LEVEL, false, ActorType.MOB, 0);
+            Actor newMob = new Actor(mobHP, mobATK, mobDEF, false, ActorType.MOB, 0);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
             if (Main.consoleMode) {

@@ -8,7 +8,8 @@
 PROBLEM WITH STATES- having to make enormous constructors—
 is there a way to fix this issue? 
 Does generalizing the state into its own class solve these problems? Sounds like a design pattern...  
-- No way to do this in Java... must change the constructor for all new instances. 
+- No way to do this in Java... must change the constructor for all new instances.
+-- Racket can do this!
 
 [x] What kind of programming is HTML/CSS anyway??
 - markup languages— no real programming because it's just descriptions of things— no control flow etc...
@@ -45,6 +46,22 @@ Does the game logic need to rely on onTick? How do you make the game WAIT?
 
 ## TESTING
 Test only functions that do important things/give output values
+
+###Actor
+DONE TESTING!
+
+###FieldWorld
+ - movement
+ - deciding on random battles
+
+###BattleWorld - 
+Hard to test because reliance on random logic
+ - Cannot access specific fields of World 
+
+###MessageWorld - 
+Difficult to test for same reasons as BattleWorld
+
+
 
 ## Command Line version??
 - print lines for all actions

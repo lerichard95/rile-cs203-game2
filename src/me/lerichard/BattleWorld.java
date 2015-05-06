@@ -58,7 +58,6 @@ public class BattleWorld extends World {
             Main.consolePrint("======   BATTLE WORLD    ======");
         }
 
-
         // Only do stuff when the player and mob are alive
 
         // If the mob dies, then show victory, decide to gift a potion
