@@ -1,5 +1,6 @@
 package me.lerichard;
 
+import javalib.funworld.World;
 import tester.Tester;
 
 /**
@@ -150,60 +151,48 @@ public class Examples {
         t.checkExpect(testMob1.equals(null), false, "Actor equals() - null input");
     }
 
-//    /**
-//     * Test method for Player equals()
-//     *
-//     * @param t
-//     */
-//    public void testPlayerEquals(Tester t) {
-//        int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
-//        boolean randBool1 = Main.RAND.nextBoolean();
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, randBool1);
-//        Player testExpect = new Player(randInt1, randInt1, randInt1, randBool1);
-//        Player testExpect2 = new Player(0, 0, 0, true);
-//        t.checkExpect(testPlayer1.equals(testExpect), true, "Player equals()");
-//        t.checkExpect(testPlayer1.equals(testExpect2), false, "Player equals() - expect false");
-//        t.checkExpect(testPlayer1.equals(null), false, "Player equals() - null input");
-//    }
-//
-//    /**
-//     * Test for BattleWorld key events
-//     *
-//     * @param t
-//     */
-//    public void testBattleKeyEvent(Tester t) {
-//        boolean testBool1 = true;
-//        int randInt1 = 1 + Main.RAND.nextInt(99);
-//        FieldWorld prevWorld = new FieldWorld();
-//        Player testPlayer1 = new Player(randInt1, randInt1, randInt1, testBool1);
-//        Mob testMob1 = new Mob(randInt1, randInt1, testBool1);
-//        World testBw1 = new BattleWorld(randInt1, prevWorld, testPlayer1, testMob1, testBool1);
-//
-//        // Not possible to test the exact output of testBw1 because we can't examine specific fields of
-//        // a superclass
-//        // Attack
-//
-//        int expectHP1 = 0;
-//        testBw1 = testBw1.onKeyEvent("A");
-//        Mob expectMob1 = new Mob(expectHP1, randInt1, false);
-//        BattleWorld expectBw1 = new BattleWorld(0, prevWorld, testPlayer1, expectMob1, false);
-//
-//        //(expectMob1.hitPoints < testMob1.hitPoints);
-//        t.checkExpect((testBw1.onKeyEvent("A") instanceof BattleWorld), true, "onKeyEvent() - SPACEBAR");
-//
-//        // Defend
-//        t.checkExpect((testBw1.onKeyEvent("D") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
-//
-//        // Heal
-//        t.checkExpect((testBw1.onKeyEvent("H") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
-//
-//    }
-//
-//    public void testBattleDamageAmount(Tester t) {
-//        t.checkExpect(
-//                (BattleWorld.damageAmount() < FieldWorld.ATTACK_LEVEL), true, "BattleWorld.damageAmount()");
-//    }
-//
+    /**
+     * Test for BattleWorld key events
+     *
+     * @param t
+     */
+    public void testBattleKeyEvent(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
 
+        boolean testBool1 = true;
+        int randInt1 = 1 + Main.RAND.nextInt(99);
+
+        FieldWorld prevWorld = new FieldWorld();
+        Actor testPlayer1 = new Actor(randInt1, randInt1, randInt1, testBool1, randType, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, testBool1, randType, randInt1);
+        World testBw1 = new BattleWorld(randInt1, prevWorld, testPlayer1, testMob1, testBool1);
+
+        // Not possible to test the exact output of testBw1 because we can't examine specific fields of
+        // a superclass World
+
+        // Attack
+        int expectHP1 = 0;
+        testBw1 = testBw1.onKeyEvent("A");
+        Actor expectMob1 = new Actor(randInt1, randInt1, randInt1, testBool1, randType, randInt1);
+        BattleWorld expectBw1 = new BattleWorld(0, prevWorld, testPlayer1, expectMob1, false);
+
+        //(expectMob1.hitPoints < testMob1.hitPoints);
+        t.checkExpect((testBw1.onKeyEvent("A") instanceof BattleWorld), true, "onKeyEvent() - SPACEBAR");
+
+        // Defend
+        t.checkExpect((testBw1.onKeyEvent("D") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
+
+        // Heal
+        t.checkExpect((testBw1.onKeyEvent("H") instanceof BattleWorld), true, "onKeyEvent() - DEFEND");
+    }
+
+    public void testBattleDamageAmount(Tester t) {
+        t.checkExpect(
+                (BattleWorld.damageAmount() <= FieldWorld.ATTACK_LEVEL),
+                true, "BattleWorld.damageAmount()");
+    }
+
+    
 
 }
