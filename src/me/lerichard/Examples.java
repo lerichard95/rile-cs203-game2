@@ -41,18 +41,21 @@ public class Examples {
     }
 
     /**
-     * Test method for Mob removeHP()
+     * Test method for Actor removeHP()
      *
      * @param t
      */
     public void testActorRemoveHP(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
+
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         int randInt2 = 1 + Main.RAND.nextInt(randInt1);
         int expectInt = randInt1 - randInt2;
         int testDefPower = FieldWorld.DEFENSE_LEVEL;
         //Defense OFF
-        Actor testMob1 = new Actor(randInt1, randInt1, testDefPower, false, ActorType.MOB, randInt1);
-        Actor testExpect1 = new Actor(expectInt, randInt1, testDefPower, false, ActorType.MOB, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, testDefPower, false, randType, randInt1);
+        Actor testExpect1 = new Actor(expectInt, randInt1, testDefPower, false, randType, randInt1);
         t.checkExpect(testMob1.removeHP(randInt2), testExpect1, "Mob removeHP()");
 
         //Defense ON - Checking for divide by zero caused by casting
@@ -61,8 +64,8 @@ public class Examples {
             expectDamageDef = (int) (randInt2 / testDefPower);
         }
         int expectHPDef = randInt1 - expectDamageDef;
-        Actor testMob2 = new Actor(randInt1, randInt1, testDefPower, true, ActorType.MOB, randInt1);
-        Actor testExpect2 = new Actor(expectHPDef, randInt1, testDefPower, false, ActorType.MOB, randInt1);
+        Actor testMob2 = new Actor(randInt1, randInt1, testDefPower, true, randType, randInt1);
+        Actor testExpect2 = new Actor(expectHPDef, randInt1, testDefPower, false, randType, randInt1);
         t.checkExpect(testMob2.removeHP(randInt2), testExpect2, "Mob removeHP() - defense mode");
 
         int randIntZero = Math.abs(Main.RAND.nextInt(FieldWorld.DEFENSE_LEVEL));
@@ -71,8 +74,8 @@ public class Examples {
             expectDamageDef = (int) (randIntZero / FieldWorld.DEFENSE_LEVEL);
         }
         int expectHPDef2 = randInt1 - expectDamageDef2;
-        Actor testMob3 = new Actor(randInt1, randInt1, testDefPower, true, ActorType.MOB, randInt1);
-        Actor testExpect3 = new Actor(expectHPDef2, randInt1, testDefPower, false, ActorType.MOB, randInt1);
+        Actor testMob3 = new Actor(randInt1, randInt1, testDefPower, true, randType, randInt1);
+        Actor testExpect3 = new Actor(expectHPDef2, randInt1, testDefPower, false, randType, randInt1);
         t.checkExpect(testMob3.removeHP(randIntZero), testExpect3,
                 "Actor removeHP() - defense mode: divide by zero case");
 
@@ -84,12 +87,15 @@ public class Examples {
      * @param t
      */
     public void testActorIsAlive(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
+
         int randInt1 = Main.RAND.nextInt();
         boolean randBool1 = true;
         if (randInt1 <= 0) {
             randBool1 = false;
         }
-        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
         t.checkExpect(testMob1.isAlive(), randBool1, "Mob isAlive()");
     }
 
@@ -99,36 +105,45 @@ public class Examples {
      * @param t
      */
     public void testActorIsDef(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
+
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
-        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
         t.checkExpect(testMob1.isDef(), randBool1, "Mob isDef()");
     }
 
     /**
-     * Tester method for Mob activateDefend()
+     * Tester method for Actor activateDefend()
      *
      * @param t
      */
     public void testMobActivateDefend(Tester t) {
+
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
         boolean expect = true;
-        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
-        Actor testExpect = new Actor(randInt1, randInt1, randInt1, expect, ActorType.MOB, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
+        Actor testExpect = new Actor(randInt1, randInt1, randInt1, expect, randType, randInt1);
         t.checkExpect(testMob1.activateDefend(), testExpect, "Actor activateDefend()");
     }
 
     /**
-     * Test method for Mob equals()
+     * Test method for Actor equals()
      *
      * @param t
      */
     public void testActorEquals(Tester t) {
+        int randTypeIndex = Math.abs(Main.RAND.nextInt(ActorType.values().length));
+        ActorType randType = ActorType.values()[randTypeIndex];
+
         int randInt1 = 1 + Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
-        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
-        Actor testExpect = new Actor(randInt1, randInt1, randInt1, randBool1, ActorType.MOB, randInt1);
+        Actor testMob1 = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
+        Actor testExpect = new Actor(randInt1, randInt1, randInt1, randBool1, randType, randInt1);
         Actor testExpect2 = new Actor(0, 0, randInt1, true, ActorType.MOB, 0);
         t.checkExpect(testMob1.equals(testExpect), true, "Actor equals()");
         t.checkExpect(testMob1.equals(testExpect2), false, "Actor equals() - expect false");
