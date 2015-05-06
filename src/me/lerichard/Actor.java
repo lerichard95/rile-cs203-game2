@@ -79,7 +79,11 @@ public class Actor {
             }
             int newHP = this.hitPoints - damage;
             if (Main.consoleMode) {
-                Main.consolePrint("Player defended! Actual damage:" + damage);
+                if (this.type.equals(ActorType.PLAYER)) {
+                    Main.consolePrint("Player defended! Actual damage:" + damage);
+                } else
+                    Main.consolePrint("Mob defended! Actual damage:" + damage);
+
             }
             return new Actor(newHP, this.atkLevel, this.defPower, false, this.type, this.hpPots);
         }

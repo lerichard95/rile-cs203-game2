@@ -13,7 +13,7 @@ import java.awt.*;
 public class FieldWorld extends World {
     public static final int DEFAULT_HIT_POINTS_MAX = 100;
     public static final int ATTACK_LEVEL = 25;
-    public static final int DEFENSE_LEVEL = 5;
+    public static final int DEFENSE_LEVEL = 2;
     public static final int DEFAULT_HP_POTS = 1;
     public static final int HEAL_AMOUNT = 30;
 
