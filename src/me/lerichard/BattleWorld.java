@@ -18,13 +18,13 @@ public class BattleWorld extends World {
     static String LABEL_PLAYER = "Player";
 
     FieldWorld prevWorld;
-    Player player;
-    Mob mob;
+    Actor player;
+    Actor mob;
     boolean playerTurn;
     int ticks;
 
 
-    public BattleWorld(int ticks, FieldWorld prevWorld, Player player, Mob mob, boolean playerTurn) {
+    public BattleWorld(int ticks, FieldWorld prevWorld, Actor player, Actor mob, boolean playerTurn) {
         this.ticks = ticks;
         this.prevWorld = prevWorld;
         this.player = player;
@@ -32,6 +32,20 @@ public class BattleWorld extends World {
         this.playerTurn = playerTurn;
     }
 
+    /**
+     * Calculates the damage that should be done.
+     * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
+     * Can never hit 0, just in case 0 triggers a divide by zero error.
+     *
+     * @return
+     */
+    public static int damageAmount() {
+        // Add 1 so that there is never a divide by zero issue caused by defense calcuation
+        int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
+
+        Main.consolePrint("Damage =" + dmg);
+        return dmg;
+    }
 
     /**
      * Controls main BattleWorld game logic. Exits to field and rewards player
@@ -58,12 +72,13 @@ public class BattleWorld extends World {
             if (randNumber == 0) {
                 FieldWorld newFieldWorld;
                 int newPots = this.player.hpPots + 1;
-                Player newPlayerState =
-                        new Player(this.player.hitPoints,
-                                this.player.atkLevel, newPots, false);
-                newFieldWorld = new FieldWorld(0,
-                        newPlayerState, prevWorld.haveTreasure,
-                        prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
+                Actor newPlayerState =
+                        new Actor(this.player.hitPoints,
+                                this.player.atkLevel, this.player.defPower, false, this.player.type, newPots);
+                newFieldWorld =
+                        new FieldWorld(0,
+                                newPlayerState, prevWorld.haveTreasure,
+                                prevWorld.treasureCoord, prevWorld.fieldObjectPlayer, 0);
 
                 Main.consolePrint("Player got a potion!");
                 return new MessageWorld(0, "Victory!", newFieldWorld);
@@ -105,22 +120,6 @@ public class BattleWorld extends World {
         return nbw;
     }
 
-
-    /**
-     * Calculates the damage that should be done.
-     * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
-     * Can never hit 0, just in case 0 triggers a divide by zero error.
-     *
-     * @return
-     */
-    public static int damageAmount() {
-        // Add 1 so that there is never a divide by zero issue caused by defense calcuation
-        int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
-
-        Main.consolePrint("Damage =" + dmg);
-        return dmg;
-    }
-
     /**
      * Returns a BattleWorld reflecting what action the Mob took
      *
@@ -132,12 +131,12 @@ public class BattleWorld extends World {
         // 0. Attack player
         if (choice == 0) {
             Main.consolePrint("Mob attacks player");
-            Player newPlayer = this.player.removeHP(damageAmount());
+            Actor newPlayer = this.player.removeHP(damageAmount());
             return new BattleWorld(0, this.prevWorld, newPlayer, this.mob, true);
         }
         // 1. Put Mob into defense mode
         else {
-            Mob newMob = this.mob.activateDefend();
+            Actor newMob = this.mob.activateDefend();
             Main.consolePrint("Mob activated defense mode!");
             return new BattleWorld(0, this.prevWorld, this.player, newMob, true);
         }
@@ -159,7 +158,7 @@ public class BattleWorld extends World {
             // Player ATTACKs
             if (s.equalsIgnoreCase("A")) {
                 Main.consolePrint("Player attacks!");
-                Mob nm = this.mob.removeHP(damageAmount());
+                Actor nm = this.mob.removeHP(damageAmount());
                 BattleWorld nbw = new BattleWorld(0, this.prevWorld, this.player, nm, false);
                 return nbw;
             }
@@ -167,14 +166,14 @@ public class BattleWorld extends World {
             // Player DEFENDS
             if (s.equalsIgnoreCase("D")) {
                 Main.consolePrint("Player defends.");
-                Player np = this.player.activateDefend();
+                Actor np = this.player.activateDefend();
                 BattleWorld nbwDef = new BattleWorld(0, this.prevWorld, np, this.mob, false);
                 return nbwDef;
             }
 
             if (s.equalsIgnoreCase("P")) {
                 Main.consolePrint("Player heals.");
-                Player npHeal = this.player.addHP(FieldWorld.HEAL_AMOUNT);
+                Actor npHeal = this.player.addHP(FieldWorld.HEAL_AMOUNT);
                 BattleWorld nbwHeal = new BattleWorld(0, this.prevWorld, npHeal, this.mob, false);
                 return nbwHeal;
             }

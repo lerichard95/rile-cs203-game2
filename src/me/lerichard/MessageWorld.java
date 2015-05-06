@@ -29,7 +29,6 @@ public class MessageWorld extends World {
             if (Main.consoleMode) {
                 Main.consolePrint("====== Message =======");
                 Main.consolePrint(this.message);
-                Main.consolePrint("====================");
             }
 
             int newTicks = this.ticks + 1;
@@ -43,9 +42,6 @@ public class MessageWorld extends World {
         }
 
         // Update the ticks after a tick has occurred
-        // Just keep updating ticks... "who cares about resources" right?
-        // Who cares if the program crashes after maximum int has occured?
-        // ¯\_(ツ)_/¯ ¯\_(ツ)_/¯ ( ‾ʖ̫‾) ( ‾ʖ̫‾) lololol
         int newTicks = this.ticks + 1;
         MessageWorld newMsgWorld =
                 new MessageWorld(newTicks, this.message, this.next);

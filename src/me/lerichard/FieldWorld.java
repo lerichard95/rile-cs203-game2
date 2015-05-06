@@ -13,7 +13,7 @@ import java.awt.*;
 public class FieldWorld extends World {
     public static final int DEFAULT_HIT_POINTS_MAX = 100;
     public static final int ATTACK_LEVEL = 25;
-    public static final int DEFENSE_LEVEL = 2;
+    public static final int DEFENSE_LEVEL = 5;
     public static final int DEFAULT_HP_POTS = 1;
     public static final int HEAL_AMOUNT = 30;
 
@@ -23,8 +23,9 @@ public class FieldWorld extends World {
     public static final int MAX_FIELD_WIDTH = 10;
 
     // Persistent states
-    public Player playerState = new Player(DEFAULT_HIT_POINTS_MAX,
-            ATTACK_LEVEL, DEFAULT_HP_POTS, false);
+    public Actor playerState =
+            new Actor(DEFAULT_HIT_POINTS_MAX,
+                    ATTACK_LEVEL, DEFENSE_LEVEL, false, ActorType.PLAYER, DEFAULT_HP_POTS);
     public boolean haveTreasure = false;
     public int stepsTaken = 0;
     public int ticks;
@@ -40,7 +41,7 @@ public class FieldWorld extends World {
 
     public FieldWorld(
             int ticks,
-            Player playerState,
+            Actor playerState,
             boolean haveTreasure,
             Coord treasureCoord,
             FieldObject fieldObjectPlayer,
@@ -119,7 +120,8 @@ public class FieldWorld extends World {
             int mobDEF = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
 
-            Mob newMob = new Mob(mobHP, mobATK, false);
+            // TODO: Mob pots??
+            Actor newMob = new Actor(mobHP, mobATK, DEFENSE_LEVEL, false, ActorType.MOB, 0);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
             if (Main.consoleMode) {
