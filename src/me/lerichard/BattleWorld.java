@@ -229,8 +229,8 @@ public class BattleWorld extends World {
         int lineNum = 0;
 
         TextImage player = new TextImage(new Coord(0, 0).CoordToPinhole(), BattleWorld.LABEL_PLAYER, BattleWorld.FONT_SIZE, 0, Color.WHITE);
-        RectangleImage bg = new RectangleImage(new Coord(0, 0).CoordToPinhole(), 200, 100, Color.BLACK);
-        WorldImage stats = new OverlayImages(bg, player);
+        RectangleImage bgBox = new RectangleImage(new Coord(Main.WINDOW_WIDTH/2, Main.WINDOW_HEIGHT/2), 200, 100, Color.BLACK);
+        WorldImage stats = new OverlayImages(bgBox, player);
         return stats;
     }
 
