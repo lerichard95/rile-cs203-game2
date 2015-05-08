@@ -188,8 +188,9 @@ public class Examples {
     }
 
     public void testBattleDamageAmount(Tester t) {
+        int randInt1 = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL));
         t.checkExpect(
-                (BattleWorld.damageAmount() <= FieldWorld.ATTACK_LEVEL),
+                (BattleWorld.damageAmount(randInt1) <= FieldWorld.ATTACK_LEVEL),
                 true, "BattleWorld.damageAmount()");
     }
 

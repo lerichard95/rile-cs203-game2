@@ -39,9 +39,9 @@ public class BattleWorld extends World {
      *
      * @return
      */
-    public static int damageAmount() {
+    public static int damageAmount(int atk) {
         // Add 1 so that there is never a divide by zero issue caused by defense calcuation
-        int dmg = Math.abs(Main.RAND.nextInt(FieldWorld.ATTACK_LEVEL)) + 1;
+        int dmg = Math.abs(Main.RAND.nextInt(atk)) + 1;
 
         Main.consolePrint("Damage =" + dmg);
         return dmg;
@@ -130,7 +130,7 @@ public class BattleWorld extends World {
         // 0. Attack player
         if (choice == 0) {
             Main.consolePrint("Mob attacks player");
-            Actor newPlayer = this.player.removeHP(damageAmount());
+            Actor newPlayer = this.player.removeHP(damageAmount(this.mob.atkLevel));
             return new BattleWorld(0, this.prevWorld, newPlayer, this.mob, true);
         }
         // 1. Put Mob into defense mode
@@ -157,7 +157,7 @@ public class BattleWorld extends World {
             // Player ATTACKs
             if (s.equalsIgnoreCase("A")) {
                 Main.consolePrint("Player attacks!");
-                Actor nm = this.mob.removeHP(damageAmount());
+                Actor nm = this.mob.removeHP(damageAmount(this.player.atkLevel));
                 BattleWorld nbw = new BattleWorld(0, this.prevWorld, this.player, nm, false);
                 return nbw;
             }

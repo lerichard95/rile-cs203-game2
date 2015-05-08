@@ -118,8 +118,8 @@ public class FieldWorld extends World {
                     (int) (FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75)));
             int mobATK = Math.abs(Main.RAND.nextInt(
                     (int) (FieldWorld.ATTACK_LEVEL * 0.75)));
-            //TODO: Mobs can have 75% of the defense that player does...
-            int mobDEF = Math.abs(Main.RAND.nextInt(
+            // TODO: Might divide by zero if the mobDEF ends up being zero
+            int mobDEF = Math.abs(2+ Main.RAND.nextInt(
                     (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
             Actor newMob = new Actor(mobHP, mobATK, mobDEF, false, ActorType.MOB, 0);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
@@ -131,6 +131,7 @@ public class FieldWorld extends World {
             }
             return new MessageWorld(0, "Random battle!", newBattle);
         }
+
         // Return an unmodified world when there is not a random battle
         return nonBattleWorld;
     }
