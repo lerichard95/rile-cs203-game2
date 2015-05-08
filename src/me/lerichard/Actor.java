@@ -50,19 +50,24 @@ public class Actor {
      * @return a new Actor with added HP
      */
     public Actor addHP(int p) {
-        Main.consolePrint("Amount healed=" + p);
         int newPots = this.hpPots;
-        //Only decrement hpPots if it is greater than 0
         if (this.hpPots > 0) {
+            //Only decrement hpPots if it is greater than 0
             newPots = this.hpPots - 1;
-        }
 
-        // Strategic: only heal up to the specifed maximum HP... discard excess
-        int newHP = this.hitPoints + p;
-        if (newHP <= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
-            return new Actor(newHP, this.atkLevel, this.defPower, false, this.type, newPots);
+            // Strategic: only heal up to the specifed maximum HP... discard excess
+            int newHP = this.hitPoints + p;
+            if (newHP <= FieldWorld.DEFAULT_HIT_POINTS_MAX) {
+                Main.consolePrint("Amount healed=" + p);
+                return new Actor(newHP, this.atkLevel, this.defPower, false, this.type, newPots);
+            }
+            Main.consolePrint("Amount healed=" + p);
+            return new Actor(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, this.defPower, false, this.type, newPots);
+        } else {
+            // Don't do anything if the player didn't have any potions
+            Main.consolePrint("No potions available— did not heal");
+            return new Actor(this.hitPoints, this.atkLevel, this.defPower, false, this.type, this.hpPots);
         }
-        return new Actor(FieldWorld.DEFAULT_HIT_POINTS_MAX, this.atkLevel, this.defPower, false, this.type, newPots);
     }
 
     /**
