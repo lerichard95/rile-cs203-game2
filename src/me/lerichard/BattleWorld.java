@@ -1,10 +1,7 @@
 package me.lerichard;
 
 import javalib.funworld.World;
-import javalib.worldimages.OverlayImages;
-import javalib.worldimages.RectangleImage;
-import javalib.worldimages.TextImage;
-import javalib.worldimages.WorldImage;
+import javalib.worldimages.*;
 
 import java.awt.*;
 import java.util.Objects;
@@ -14,8 +11,8 @@ import java.util.Objects;
  */
 public class BattleWorld extends World {
     static int waitTime;
-    static int FONT_SIZE;
-    static String LABEL_PLAYER = "Player";
+    static int FONT_SIZE = 14;
+    static String LABEL_PLAYER = "PLAYER!";
 
     FieldWorld prevWorld;
     Actor player;
@@ -227,10 +224,43 @@ public class BattleWorld extends World {
 
         // height of a line is 14
         int lineNum = 0;
+        Posn bgBoxCoord = new Coord(FieldWorld.FIELD_OBJECT_RADIUS + 150, FieldWorld.FIELD_OBJECT_RADIUS*17);
+        Posn playerCoord = new Posn (bgBoxCoord.x - 100, bgBoxCoord.y - 14);
 
-        TextImage player = new TextImage(new Coord(0, 0).CoordToPinhole(), BattleWorld.LABEL_PLAYER, BattleWorld.FONT_SIZE, 0, Color.WHITE);
-        RectangleImage bgBox = new RectangleImage(new Coord(Main.WINDOW_WIDTH/2, Main.WINDOW_HEIGHT/2), 200, 100, Color.BLACK);
-        WorldImage stats = new OverlayImages(bgBox, player);
+
+        WorldImage playerLabel = new TextImage(
+                playerCoord,
+                BattleWorld.LABEL_PLAYER,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage playerHP = new TextImage(
+                new Posn(playerCoord.x, playerCoord.y + 14),
+                "HP: " + this.player.hitPoints,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage playerPots = new TextImage(
+                new Posn(playerCoord.x, playerCoord.y + 14 * 2),
+                "Potions: " + this.player.hpPots,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        RectangleImage bgBox = new RectangleImage(
+                bgBoxCoord,
+                12 * FieldWorld.FIELD_OBJECT_RADIUS,
+                4 * 14,
+                Color.BLACK);
+
+        WorldImage player2 = new OverlayImages(playerHP, playerPots);
+        WorldImage player1 = new OverlayImages(playerLabel, player2);
+        WorldImage stats = new OverlayImages(bgBox, player1);
         return stats;
     }
 

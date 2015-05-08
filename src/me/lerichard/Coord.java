@@ -37,10 +37,10 @@ public class Coord extends Posn {
         return new Pinhole(this.x, this.y);
     }
 
-    public Posn toBlockPinhole() {
+    public Coord toBlockPinhole() {
         int newX = (this.x * FieldWorld.FIELD_OBJECT_DIAMETER) + FieldWorld.FIELD_OBJECT_RADIUS;
         int newY = (this.y * FieldWorld.FIELD_OBJECT_DIAMETER) + FieldWorld.FIELD_OBJECT_RADIUS;
-        return new Posn(newX, newY);
+        return new Coord(newX, newY);
     }
 
 

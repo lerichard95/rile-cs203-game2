@@ -17,7 +17,7 @@ public class FieldWorld extends World {
     public static final int DEFAULT_HP_POTS = 1;
     public static final int HEAL_AMOUNT = 30;
 
-    public static final int FIELD_OBJECT_DIAMETER = 40;
+    public static final int FIELD_OBJECT_DIAMETER = 50;
     public static final int FIELD_OBJECT_RADIUS = FIELD_OBJECT_DIAMETER / 2;
     public static final int MAX_FIELD_HEIGHT = 10;
     public static final int MAX_FIELD_WIDTH = 10;
