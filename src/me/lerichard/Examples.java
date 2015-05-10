@@ -193,7 +193,82 @@ public class Examples {
         t.checkExpect(
                 (BattleWorld.damageAmount(randInt1) <= randIntATKLEVEL),
                 true, "BattleWorld.damageAmount()");
+
     }
 
+    public void testFieldRandomBattles(Tester t){
+        int randInt1 = Math.abs(Main.RAND.nextInt());
+        boolean randBool1 = Main.RAND.nextBoolean();
+        ActorType randActorType1 = ActorType.values()[
+                // Get a random actor type
+                Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                ];
+        FieldObjectType randFoType = FieldObjectType.values()[
+                // Get a random FieldObject type
+                Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                ];
+        Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+        Coord randCoord1 = new Coord(randInt1, randInt1);
+        FieldObject randFo1 = new FieldObject(randCoord1, randFoType);
+
+        FieldWorld testFw1 = new FieldWorld(
+                randInt1,
+                randActor1,
+                randBool1,
+                randCoord1,
+                randFo1,
+                randInt1);
+
+        // if steps is zero, return false
+        t.checkExpect(
+                testFw1.getRandomBattle(0),
+                false, "getRandomBattle() - steps=0");
+
+    }
+
+
+    /**
+     * Test for movement function in FieldWorld
+     *
+     * @param t
+     */
+    public void testFieldMovement(Tester t) {
+        int randInt1 = Math.abs(Main.RAND.nextInt());
+        boolean randBool1 = Main.RAND.nextBoolean();
+        ActorType randActorType1 = ActorType.values()[
+                // Get a random actor type
+                Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                ];
+        FieldObjectType randFoType = FieldObjectType.values()[
+                // Get a random FieldObject type
+                Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                ];
+        Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+        Coord randCoord1 = new Coord(randInt1, randInt1);
+        FieldObject randFo1 = new FieldObject(randCoord1, randFoType);
+
+        FieldWorld testFw1 = new FieldWorld(
+                randInt1,
+                randActor1,
+                randBool1,
+                randCoord1,
+                randFo1,
+                randInt1);
+
+        //movePlayerUp()
+        FieldWorld expectFw1 = new FieldWorld(
+                randInt1,
+                randActor1,
+                randBool1,
+                randCoord1,
+                randFo1,
+                randInt1);
+
+        t.checkExpect(
+                testFw1.movePlayerUp(),
+                expectFw1,
+                "movePlayerUp()"
+        );
+    }
 
 }

@@ -97,7 +97,7 @@ public class FieldWorld extends World {
      * @param steps int, number of steps taken
      * @return true if battle should occur
      */
-    private boolean getRandomBattle(int steps) {
+    public boolean getRandomBattle(int steps) {
         if (steps <= 0) {
             return false;
         }

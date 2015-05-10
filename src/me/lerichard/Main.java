@@ -1,7 +1,5 @@
 package me.lerichard;
 
-import tester.Tester;
-
 import java.util.Random;
 
 public class Main {
