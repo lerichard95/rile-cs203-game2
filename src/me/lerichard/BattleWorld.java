@@ -37,9 +37,15 @@ public class BattleWorld extends World {
      * @return
      */
     public static int damageAmount(int atk) {
+        
         // Add 1 so that there is never a divide by zero issue caused by defense calcuation
-        int dmg = Math.abs(Main.RAND.nextInt(atk)) + 1;
-
+        int dmg = Math.abs(1 + Main.RAND.nextInt(atk));
+        // Dealing at least 90 percent of the max damage earns a critical hit!
+        if (dmg >= (int) (atk * .90)) {
+            // Deal the full damage
+            Main.consolePrint("CRITICAL HIT! Rolled a " + dmg);
+            dmg = atk;
+        }
         Main.consolePrint("Damage =" + dmg);
         return dmg;
     }
@@ -224,8 +230,8 @@ public class BattleWorld extends World {
 
         // height of a line is 14
         int lineNum = 0;
-        Posn bgBoxCoord = new Coord(FieldWorld.FIELD_OBJECT_RADIUS + 150, FieldWorld.FIELD_OBJECT_RADIUS*17);
-        Posn playerCoord = new Posn (bgBoxCoord.x - 100, bgBoxCoord.y - 14);
+        Posn bgBoxCoord = new Coord(FieldWorld.FIELD_OBJECT_RADIUS + 150, FieldWorld.FIELD_OBJECT_RADIUS * 17);
+        Posn playerCoord = new Posn(bgBoxCoord.x - 100, bgBoxCoord.y - 14);
 
 
         WorldImage playerLabel = new TextImage(

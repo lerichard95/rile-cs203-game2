@@ -114,7 +114,7 @@ public class FieldWorld extends World {
     public World enterPossibleBattle(World nonBattleWorld) {
         if (getRandomBattle(this.stepsTaken)) {
 
-            // TODO: Prepare values for a random mob encounter
+            //Prepare values for a random mob encounter
             Actor newMob = Actor.randomActor(ActorType.MOB);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
