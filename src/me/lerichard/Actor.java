@@ -28,6 +28,39 @@ public class Actor {
     }
 
     /**
+     * Generates a new Actor with random stats
+     *
+     * @param type ActorType of the new Actor
+     * @return A new randomActor
+     */
+    public static Actor randomActor(ActorType type) {
+        int newHP = Math.abs(Main.RAND.nextInt(
+                (FieldWorld.DEFAULT_HIT_POINTS_MAX)));
+
+        int newATK = Math.abs(Main.RAND.nextInt(
+                (FieldWorld.ATTACK_LEVEL)));
+
+        //Might divide by zero if the defense ends up being zero
+        int newDEF = Math.abs(2 + Main.RAND.nextInt(FieldWorld.DEFENSE_LEVEL));
+
+        if (type.equals(ActorType.MOB)) {
+            //Mob should have up to 75% of the player's stats.
+            newHP = Math.abs(Main.RAND.nextInt(
+                    (int) (FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75)));
+
+            newATK = Math.abs(Main.RAND.nextInt(
+                    (int) (FieldWorld.ATTACK_LEVEL * 0.75)));
+
+            //Might divide by zero if the defense ends up being zero
+            newDEF = Math.abs(2 + Main.RAND.nextInt(
+                    (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
+        }
+
+        //Actor should not be in defense mode upon start
+        return new Actor(newHP, newATK, newDEF, false, type, 0);
+    }
+
+    /**
      * String representation of Actor state
      *
      * @return String representing Actor state

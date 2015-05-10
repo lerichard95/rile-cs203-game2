@@ -113,15 +113,9 @@ public class FieldWorld extends World {
      */
     public World enterPossibleBattle(World nonBattleWorld) {
         if (getRandomBattle(this.stepsTaken)) {
-            // Prepare values for a random mob encounter
-            int mobHP = Math.abs(Main.RAND.nextInt(
-                    (int) (FieldWorld.DEFAULT_HIT_POINTS_MAX * 0.75)));
-            int mobATK = Math.abs(Main.RAND.nextInt(
-                    (int) (FieldWorld.ATTACK_LEVEL * 0.75)));
-            // TODO: Might divide by zero if the mobDEF ends up being zero
-            int mobDEF = Math.abs(2+ Main.RAND.nextInt(
-                    (int) (FieldWorld.DEFENSE_LEVEL * 0.75)));
-            Actor newMob = new Actor(mobHP, mobATK, mobDEF, false, ActorType.MOB, 0);
+
+            // TODO: Prepare values for a random mob encounter
+            Actor newMob = Actor.randomActor(ActorType.MOB);
             BattleWorld newBattle = new BattleWorld(0, this, this.playerState, newMob, false);
 
             if (Main.consoleMode) {

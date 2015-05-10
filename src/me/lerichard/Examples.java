@@ -196,7 +196,7 @@ public class Examples {
 
     }
 
-    public void testFieldRandomBattles(Tester t){
+    public void testFieldRandomBattles(Tester t) {
         int randInt1 = Math.abs(Main.RAND.nextInt());
         boolean randBool1 = Main.RAND.nextBoolean();
         ActorType randActorType1 = ActorType.values()[
