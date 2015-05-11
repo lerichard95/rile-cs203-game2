@@ -435,8 +435,64 @@ public class BattleWorld extends World {
 
     }
 
-    /*public WorldImage mobStats() {
+    /**
+     * Draws the board for
+     *
+     * @param mobTurn  flag for if
+     * @param action
+     * @param reaction
+     */
+    public void actionBoard(boolean mobTurn, String action, String reaction) {
+        Posn actorCoord = new Posn(loc.x - 0, loc.y - 20);
 
-    }*/
+        WorldImage line1 = new TextImage(
+                actorCoord,
+                " attacked!",
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
 
+        WorldImage line2 = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14),
+                "[ A ] to attack",
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage line3 = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 2),
+                "[ D ] to defend",
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage line4 = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 3),
+                "[ P ] to heal",
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+
+        RectangleImage bgBox = new RectangleImage(
+                loc,
+                7 * FieldWorld.FIELD_OBJECT_RADIUS,
+                5 * 14,
+                Color.BLACK);
+
+        WorldImage img5 = new OverlayImages(line1, line2);
+        WorldImage img4 = new OverlayImages(img5, line3);
+        WorldImage img3 = new OverlayImages(img4, line4);
+        WorldImage controls = new OverlayImages(bgBox, img3);
+        if (playerTurn) {
+            return controls;
+        } else {
+            return bgBox;
+        }
+
+    }
 }

@@ -1,3 +1,9 @@
+Action display box:
+MOB's Turn
+Player Action/Mob Action
+Reaction	
+	
+
 [ ] Getting better at programming - what language should I use to get better?
 - Realm of Racket
 
