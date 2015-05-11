@@ -223,25 +223,39 @@ public class BattleWorld extends World {
      * @return WorldImage
      */
     public WorldImage makeImage() {
-        WorldImage playerStats = actorStats(this.player);
-        WorldImage mobStats = actorStats(this.mob);
 
-        return new OverlayImages(playerStats, this.mob.draw());
+        Posn statLocPlayer= new Coord(
+                FieldWorld.FIELD_OBJECT_RADIUS + 60,
+                FieldWorld.FIELD_OBJECT_RADIUS * 17);
+        Posn statLocMob= new Posn(
+                FieldWorld.MAX_FIELD_WIDTH * FieldWorld.FIELD_OBJECT_RADIUS + 150,
+                FieldWorld.FIELD_OBJECT_RADIUS * 3);
+
+        WorldImage playerStats = actorStats(this.player, statLocPlayer);
+        WorldImage mobStats = actorStats(this.mob, statLocMob);
+        WorldImage statBoxes = new OverlayImages(playerStats, mobStats);
+
+
+        return new OverlayImages(statBoxes, this.mob.draw());
         //return new CircleImage(new Posn(10, 10), 10, Color.blue);
     }
 
-    public WorldImage actorStats(Actor actor) {
+    public WorldImage controlPanel() {
         // height of a line is 14
         int lineNum = 0;
-        Posn bgBoxCoord = new Coord(
-                FieldWorld.FIELD_OBJECT_RADIUS + 150,
-                FieldWorld.FIELD_OBJECT_RADIUS * 17);
-        Posn actorCoord = new Posn(bgBoxCoord.x - 0, bgBoxCoord.y - 2*14 - 7);
 
+        Posn actorCoord = new Posn(loc.x - 0, loc.y - 2 * 14 - 7);
+
+        String actorLabelName;
+        if (actor.type.equals(ActorType.PLAYER)) {
+            actorLabelName = BattleWorld.LABEL_PLAYER;
+        } else {
+            actorLabelName = "Mob";
+        }
 
         WorldImage actorLabel = new TextImage(
                 actorCoord,
-                BattleWorld.LABEL_PLAYER,
+                actorLabelName,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
@@ -279,16 +293,104 @@ public class BattleWorld extends World {
                 Color.GREEN
         );
 
+        String defString = "";
+        if (actor.isDef()) {
+            defString = "Activated Defense!";
+        } else {
+            defString = "";
+        }
         WorldImage actorIsDef = new TextImage(
                 new Posn(actorCoord.x, actorCoord.y + 14 * 5),
-                "DEF: " + actor.isDef(),
+                defString,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
         );
 
         RectangleImage bgBox = new RectangleImage(
-                bgBoxCoord,
+                loc,
+                5 * FieldWorld.FIELD_OBJECT_RADIUS,
+                4 * 25,
+                Color.BLACK);
+
+        WorldImage img5 = new OverlayImages(actorLabel, actorHP);
+        WorldImage img4 = new OverlayImages(img5, actorPots);
+        WorldImage img3 = new OverlayImages(img4, actorATKLevel);
+        WorldImage img2 = new OverlayImages(img3, actorDefLevel);
+        WorldImage img1 = new OverlayImages(img2, actorIsDef);
+        WorldImage stats = new OverlayImages(bgBox, img1);
+        return stats;
+    }
+
+    public WorldImage actorStats(Actor actor, Posn loc) {
+        // height of a line is 14
+        int lineNum = 0;
+
+        Posn actorCoord = new Posn(loc.x - 0, loc.y - 2 * 14 - 7);
+
+        String actorLabelName;
+        if (actor.type.equals(ActorType.PLAYER)) {
+            actorLabelName = BattleWorld.LABEL_PLAYER;
+        } else {
+            actorLabelName = "Mob";
+        }
+
+        WorldImage actorLabel = new TextImage(
+                actorCoord,
+                actorLabelName,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorHP = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14),
+                "HP: " + actor.hitPoints,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorPots = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 2),
+                "Potions: " + actor.hpPots,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorATKLevel = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 3),
+                "ATK Power: " + actor.atkLevel,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorDefLevel = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 4),
+                "DEF Level: " + actor.defPower,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        String defString = "";
+        if (actor.isDef()) {
+            defString = "Activated Defense!";
+        } else {
+            defString = "";
+        }
+        WorldImage actorIsDef = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 5),
+                defString,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        RectangleImage bgBox = new RectangleImage(
+                loc,
                 5 * FieldWorld.FIELD_OBJECT_RADIUS,
                 4 * 25,
                 Color.BLACK);
