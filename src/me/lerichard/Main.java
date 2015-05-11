@@ -29,7 +29,7 @@ public class Main {
         Tester.run(e);
 
         //start.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
-        //bwTest.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
+        bwTest.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");

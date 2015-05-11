@@ -223,37 +223,65 @@ public class BattleWorld extends World {
      * @return WorldImage
      */
     public WorldImage makeImage() {
-        return new OverlayImages(playerStats(), this.mob.draw());
+        WorldImage playerStats = actorStats(this.player);
+        WorldImage mobStats = actorStats(this.mob);
+
+        return new OverlayImages(playerStats, this.mob.draw());
         //return new CircleImage(new Posn(10, 10), 10, Color.blue);
     }
 
-    public WorldImage playerStats() {
-
+    public WorldImage actorStats(Actor actor) {
         // height of a line is 14
         int lineNum = 0;
-        Posn bgBoxCoord = new Coord(FieldWorld.FIELD_OBJECT_RADIUS + 150, FieldWorld.FIELD_OBJECT_RADIUS * 17);
-        Posn playerCoord = new Posn(bgBoxCoord.x - 100, bgBoxCoord.y - 14);
+        Posn bgBoxCoord = new Coord(
+                FieldWorld.FIELD_OBJECT_RADIUS + 150,
+                FieldWorld.FIELD_OBJECT_RADIUS * 17);
+        Posn actorCoord = new Posn(bgBoxCoord.x - 0, bgBoxCoord.y - 2*14 - 7);
 
 
-        WorldImage playerLabel = new TextImage(
-                playerCoord,
+        WorldImage actorLabel = new TextImage(
+                actorCoord,
                 BattleWorld.LABEL_PLAYER,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
         );
 
-        WorldImage playerHP = new TextImage(
-                new Posn(playerCoord.x, playerCoord.y + 14),
-                "HP: " + this.player.hitPoints,
+        WorldImage actorHP = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14),
+                "HP: " + actor.hitPoints,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
         );
 
-        WorldImage playerPots = new TextImage(
-                new Posn(playerCoord.x, playerCoord.y + 14 * 2),
-                "Potions: " + this.player.hpPots,
+        WorldImage actorPots = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 2),
+                "Potions: " + actor.hpPots,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorATKLevel = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 3),
+                "ATK Power: " + actor.atkLevel,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorDefLevel = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 4),
+                "DEF Level: " + actor.defPower,
+                BattleWorld.FONT_SIZE,
+                0,
+                Color.GREEN
+        );
+
+        WorldImage actorIsDef = new TextImage(
+                new Posn(actorCoord.x, actorCoord.y + 14 * 5),
+                "DEF: " + actor.isDef(),
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
@@ -261,14 +289,18 @@ public class BattleWorld extends World {
 
         RectangleImage bgBox = new RectangleImage(
                 bgBoxCoord,
-                12 * FieldWorld.FIELD_OBJECT_RADIUS,
-                4 * 14,
+                5 * FieldWorld.FIELD_OBJECT_RADIUS,
+                4 * 25,
                 Color.BLACK);
 
-        WorldImage player2 = new OverlayImages(playerHP, playerPots);
-        WorldImage player1 = new OverlayImages(playerLabel, player2);
-        WorldImage stats = new OverlayImages(bgBox, player1);
+        WorldImage img5 = new OverlayImages(actorLabel, actorHP);
+        WorldImage img4 = new OverlayImages(img5, actorPots);
+        WorldImage img3 = new OverlayImages(img4, actorATKLevel);
+        WorldImage img2 = new OverlayImages(img3, actorDefLevel);
+        WorldImage img1 = new OverlayImages(img2, actorIsDef);
+        WorldImage stats = new OverlayImages(bgBox, img1);
         return stats;
+
     }
 
     /*public WorldImage mobStats() {
