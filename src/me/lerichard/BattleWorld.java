@@ -37,7 +37,7 @@ public class BattleWorld extends World {
      * @return
      */
     public static int damageAmount(int atk) {
-        
+
         // Add 1 so that there is never a divide by zero issue caused by defense calcuation
         int dmg = Math.abs(1 + Main.RAND.nextInt(atk));
         // Dealing at least 90 percent of the max damage earns a critical hit!
@@ -46,6 +46,7 @@ public class BattleWorld extends World {
             Main.consolePrint("CRITICAL HIT! Rolled a " + dmg);
             dmg = atk;
         }
+
         Main.consolePrint("Damage =" + dmg);
         return dmg;
     }

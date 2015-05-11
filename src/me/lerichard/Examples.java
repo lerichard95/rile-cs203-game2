@@ -232,43 +232,261 @@ public class Examples {
      *
      * @param t
      */
-    public void testFieldMovement(Tester t) {
-        int randInt1 = Math.abs(Main.RAND.nextInt());
-        boolean randBool1 = Main.RAND.nextBoolean();
-        ActorType randActorType1 = ActorType.values()[
-                // Get a random actor type
-                Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
-                ];
-        FieldObjectType randFoType = FieldObjectType.values()[
-                // Get a random FieldObject type
-                Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
-                ];
-        Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
-        Coord randCoord1 = new Coord(randInt1, randInt1);
-        FieldObject randFo1 = new FieldObject(randCoord1, randFoType);
 
-        FieldWorld testFw1 = new FieldWorld(
-                randInt1,
-                randActor1,
-                randBool1,
-                randCoord1,
-                randFo1,
-                randInt1);
+    public void testFieldMoveUp(Tester t) {
 
-        //movePlayerUp()
-        FieldWorld expectFw1 = new FieldWorld(
-                randInt1,
-                randActor1,
-                randBool1,
-                randCoord1,
-                randFo1,
-                randInt1);
+        for (int i = 0; i < 50; i++) {
+            int randInt1 = Math.abs(Main.RAND.nextInt());
+            int randIntX1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_WIDTH));
+            int randIntY1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_HEIGHT));
+            boolean randBool1 = Main.RAND.nextBoolean();
 
-        t.checkExpect(
-                testFw1.movePlayerUp(),
-                expectFw1,
-                "movePlayerUp()"
-        );
+            ActorType randActorType1 = ActorType.values()[
+                    // Get a random actor type
+                    Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                    ];
+
+            /* FieldObjectType randFoType = FieldObjectType.values()[
+                    // Get a random FieldObject type
+                    Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                    ];
+            */
+
+            Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+
+            // Random treasure coord
+            Coord randCoord1 = new Coord(randInt1, randInt1);
+
+            // Important: player coord
+            Coord playerCoord1 = new Coord(randIntX1, randIntY1);
+            Coord expectCoord1 = new Coord(randIntX1, randIntY1);
+
+            int stepsInt1 = randInt1;
+            int expectStepsInt1 = randInt1;
+
+            if (randIntY1 > 0) {
+                expectCoord1 = new Coord(randIntX1, randIntY1 - 1);
+                expectStepsInt1 = stepsInt1 + 1;
+            }
+
+            FieldObject playerFo1 = new FieldObject(playerCoord1, FieldObjectType.PLAYER);
+            FieldObject expectFo1 = new FieldObject(expectCoord1, FieldObjectType.PLAYER);
+
+            FieldWorld testFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    playerFo1,
+                    stepsInt1);
+
+            //movePlayerUp()
+            FieldWorld expectFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    expectFo1,
+                    expectStepsInt1);
+
+            t.checkExpect(
+                    testFw1.movePlayerUp(false),
+                    expectFw1,
+                    "movePlayerUp()"
+            );
+        }
+    }
+
+    public void testFieldMoveDown(Tester t) {
+
+        for (int i = 0; i < 50; i++) {
+            int randInt1 = Math.abs(Main.RAND.nextInt());
+            int randIntX1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_WIDTH));
+            int randIntY1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_HEIGHT));
+            boolean randBool1 = Main.RAND.nextBoolean();
+
+            ActorType randActorType1 = ActorType.values()[
+                    // Get a random actor type
+                    Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                    ];
+
+            /* FieldObjectType randFoType = FieldObjectType.values()[
+                    // Get a random FieldObject type
+                    Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                    ];
+            */
+
+            Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+
+            // Random treasure coord
+            Coord randCoord1 = new Coord(randInt1, randInt1);
+
+            // Important: player coord
+            Coord playerCoord1 = new Coord(randIntX1, randIntY1);
+            Coord expectCoord1 = new Coord(randIntX1, randIntY1);
+
+            int stepsInt1 = randInt1;
+            int expectStepsInt1 = randInt1;
+
+            if (randIntY1 < FieldWorld.MAX_FIELD_HEIGHT) {
+                expectCoord1 = new Coord(randIntX1, randIntY1 + 1);
+                expectStepsInt1 = stepsInt1 + 1;
+            }
+
+            FieldObject playerFo1 = new FieldObject(playerCoord1, FieldObjectType.PLAYER);
+            FieldObject expectFo1 = new FieldObject(expectCoord1, FieldObjectType.PLAYER);
+
+            FieldWorld testFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    playerFo1,
+                    stepsInt1);
+
+            //movePlayerUp()
+            FieldWorld expectFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    expectFo1,
+                    expectStepsInt1);
+
+            t.checkExpect(
+                    testFw1.movePlayerDown(false),
+                    expectFw1,
+                    "movePlayerDown()"
+            );
+        }
+    }
+
+    public void testFieldMoveLeft(Tester t) {
+
+        for (int i = 0; i < 50; i++) {
+            int randInt1 = Math.abs(Main.RAND.nextInt());
+            int randIntX1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_WIDTH));
+            int randIntY1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_HEIGHT));
+            boolean randBool1 = Main.RAND.nextBoolean();
+
+            ActorType randActorType1 = ActorType.values()[
+                    // Get a random actor type
+                    Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                    ];
+
+            /* FieldObjectType randFoType = FieldObjectType.values()[
+                    // Get a random FieldObject type
+                    Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                    ];
+            */
+
+            Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+
+            // Random treasure coord
+            Coord randCoord1 = new Coord(randInt1, randInt1);
+
+            // Important: player coord
+            Coord playerCoord1 = new Coord(randIntX1, randIntY1);
+            Coord expectCoord1 = new Coord(randIntX1, randIntY1);
+
+            int stepsInt1 = randInt1;
+            int expectStepsInt1 = randInt1;
+
+            if (randIntX1 > 0) {
+                expectCoord1 = new Coord(randIntX1 - 1, randIntY1);
+                expectStepsInt1 = stepsInt1 + 1;
+            }
+
+            FieldObject playerFo1 = new FieldObject(playerCoord1, FieldObjectType.PLAYER);
+            FieldObject expectFo1 = new FieldObject(expectCoord1, FieldObjectType.PLAYER);
+
+            FieldWorld testFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    playerFo1,
+                    stepsInt1);
+
+            //movePlayerUp()
+            FieldWorld expectFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    expectFo1,
+                    expectStepsInt1);
+
+            t.checkExpect(
+                    testFw1.movePlayerLeft(false),
+                    expectFw1,
+                    "movePlayerLeft()"
+            );
+        }
+    }
+
+    public void testFieldMoveRight(Tester t) {
+
+        for (int i = 0; i < 50; i++) {
+            int randInt1 = Math.abs(Main.RAND.nextInt());
+            int randIntX1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_WIDTH));
+            int randIntY1 = Math.abs(Main.RAND.nextInt(FieldWorld.MAX_FIELD_HEIGHT));
+            boolean randBool1 = Main.RAND.nextBoolean();
+
+            ActorType randActorType1 = ActorType.values()[
+                    // Get a random actor type
+                    Math.abs(Main.RAND.nextInt(ActorType.values().length - 1))
+                    ];
+
+            /* FieldObjectType randFoType = FieldObjectType.values()[
+                    // Get a random FieldObject type
+                    Math.abs(Main.RAND.nextInt(FieldObjectType.values().length - 1))
+                    ];
+            */
+
+            Actor randActor1 = new Actor(randInt1, randInt1, randInt1, randBool1, randActorType1, randInt1);
+
+            // Random treasure coord
+            Coord randCoord1 = new Coord(randInt1, randInt1);
+
+            // Important: player coord
+            Coord playerCoord1 = new Coord(randIntX1, randIntY1);
+            Coord expectCoord1 = new Coord(randIntX1, randIntY1);
+
+            int stepsInt1 = randInt1;
+            int expectStepsInt1 = randInt1;
+
+            if (randIntX1 < FieldWorld.MAX_FIELD_WIDTH) {
+                expectCoord1 = new Coord(randIntX1 + 1, randIntY1);
+                expectStepsInt1 = stepsInt1 + 1;
+            }
+
+            FieldObject playerFo1 = new FieldObject(playerCoord1, FieldObjectType.PLAYER);
+            FieldObject expectFo1 = new FieldObject(expectCoord1, FieldObjectType.PLAYER);
+
+            FieldWorld testFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    playerFo1,
+                    stepsInt1);
+
+            //movePlayerRight()
+            FieldWorld expectFw1 = new FieldWorld(
+                    randInt1,
+                    randActor1,
+                    randBool1,
+                    randCoord1,
+                    expectFo1,
+                    expectStepsInt1);
+
+            t.checkExpect(
+                    testFw1.movePlayerRight(false),
+                    expectFw1,
+                    "movePlayerRight()"
+            );
+        }
     }
 
 }

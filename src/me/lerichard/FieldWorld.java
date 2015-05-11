@@ -29,11 +29,13 @@ public class FieldWorld extends World {
     public boolean haveTreasure = false;
     public int stepsTaken = 0;
     public int ticks;
-    public int treasureX = (Main.RAND.nextInt(MAX_FIELD_WIDTH - 1));
-    public int treasureY = (Main.RAND.nextInt(MAX_FIELD_HEIGHT - 1));
-    public Coord treasureCoord = new Coord(treasureX, treasureY);
+
+    //public int treasureX = (Main.RAND.nextInt(MAX_FIELD_WIDTH - 1));
+    //public int treasureY = (Main.RAND.nextInt(MAX_FIELD_HEIGHT - 1));
+    public Coord treasureCoord = new Coord((Main.RAND.nextInt(MAX_FIELD_WIDTH - 1)),
+            (Main.RAND.nextInt(MAX_FIELD_HEIGHT - 1)));
     FieldObject fieldObjectPlayer = new FieldObject(new Coord(0, 0), FieldObjectType.PLAYER);
-    FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
+    //FieldObject fObjTreasure = new FieldObject(treasureCoord, FieldObjectType.TREASURE);
 
     // TODO: Generalize the fieldObjects to objects in ArrayLists
     //ArrayList<FieldObject> fieldObjects;
@@ -140,16 +142,16 @@ public class FieldWorld extends World {
     public World onKeyEvent(String s) {
         Main.consolePrint("Player pressed: " + s);
         if (s.equals("up")) {
-            return movePlayerUp();
+            return movePlayerUp(true);
         }
         if (s.equals("down")) {
-            return movePlayerDown();
+            return movePlayerDown(true);
         }
         if (s.equals("left")) {
-            return movePlayerLeft();
+            return movePlayerLeft(true);
         }
         if (s.equals("right")) {
-            return movePlayerRight();
+            return movePlayerRight(true);
         }
         return this;
     }
@@ -178,11 +180,12 @@ public class FieldWorld extends World {
      *
      * @return a new World with a new Player FieldObject
      */
-    public World movePlayerUp() {
+    public World movePlayerUp(boolean battlesEnabled) {
 
         if (fieldObjectPlayer.myCoords.y <= 0) {
             Main.consolePrint("Cannot move beyond lower y bound");
-            return new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
+            return new FieldWorld(
+                    this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
                     this.fieldObjectPlayer, this.stepsTaken);
         }
 
@@ -191,18 +194,27 @@ public class FieldWorld extends World {
         FieldObject newFieldPlayerObject = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);
         Main.consolePrint("Moved player up, new FieldPlayerObject is" + newFieldPlayerObject.toString());
-        return enterPossibleBattle(
-                new FieldWorld(this.ticks,
-                        this.playerState, this.haveTreasure, this.treasureCoord,
-                        newFieldPlayerObject, newStepsTaken));
+
+        FieldWorld newFw = new FieldWorld(this.ticks,
+                this.playerState, this.haveTreasure, this.treasureCoord,
+                newFieldPlayerObject, newStepsTaken);
+
+        // Skip adapter function if testing
+        if (battlesEnabled) {
+            // Return the adapter
+            return enterPossibleBattle(newFw);
+        } else {
+            return newFw;
+        }
     }
 
     /**
      * Moves the player down one space
      *
+     * @param battlesEnabled true if enterPossibleBattle will be used
      * @return a new World with a new Player FieldObject
      */
-    public World movePlayerDown() {
+    public World movePlayerDown(boolean battlesEnabled) {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.y >= MAX_FIELD_HEIGHT) {
             Main.consolePrint("Cannot move player beyond upper y bound");
@@ -213,15 +225,28 @@ public class FieldWorld extends World {
         Coord newCoord = new Coord(this.fieldObjectPlayer.myCoords.x, newY);
         FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);
+        FieldWorld newFw = new FieldWorld(
+                this.ticks,
+                this.playerState, this.haveTreasure, this.treasureCoord,
+                newFieldObjectPlayer, newStepsTaken);
         Main.consolePrint("Moved player down, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
-        return enterPossibleBattle(
-                new FieldWorld(
-                        this.ticks,
-                        this.playerState, this.haveTreasure, this.treasureCoord,
-                        newFieldObjectPlayer, newStepsTaken));
+
+        // Skip adapter function if testing
+        if (battlesEnabled) {
+            // Return the adapter
+            return enterPossibleBattle(newFw);
+        } else {
+            return newFw;
+        }
     }
 
-    public World movePlayerLeft() {
+    /**
+     * Moves the player left one space
+     *
+     * @param battlesEnabled true if enterPossibleBattle will be used
+     * @return a new World with a new Player FieldObject
+     */
+    public World movePlayerLeft(boolean battlesEnabled) {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x <= 0) {
             Main.consolePrint("Cannot move player beyond lower x bound");
@@ -232,13 +257,27 @@ public class FieldWorld extends World {
         Coord newCoord = new Coord(newX, this.fieldObjectPlayer.myCoords.y);
         FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);
+        FieldWorld newFw = new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
+                newFieldObjectPlayer, newStepsTaken);
         Main.consolePrint("Moved player left, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
-        return enterPossibleBattle(
-                new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
-                        newFieldObjectPlayer, newStepsTaken));
+
+
+        // Skip adapter function if testing
+        if (battlesEnabled) {
+            // Return the adapter
+            return enterPossibleBattle(newFw);
+        } else {
+            return newFw;
+        }
     }
 
-    public World movePlayerRight() {
+    /**
+     * Moves the player right one space
+     *
+     * @param battlesEnabled true if enterPossibleBattle will be used
+     * @return a new World with a new Player FieldObject
+     */
+    public World movePlayerRight(boolean battlesEnabled) {
         // Only move player if they are within bounds
         if (fieldObjectPlayer.myCoords.x >= MAX_FIELD_WIDTH) {
             Main.consolePrint("Cannot move player beyond upper x bound");
@@ -247,13 +286,24 @@ public class FieldWorld extends World {
         }
 
         int newX = this.fieldObjectPlayer.myCoords.x + 1;
+
         Coord newCoord = new Coord(newX, this.fieldObjectPlayer.myCoords.y);
+
         FieldObject newFieldObjectPlayer = new FieldObject(newCoord, FieldObjectType.PLAYER);
         int newStepsTaken = (this.stepsTaken + 1);
+
+        FieldWorld newFw = new FieldWorld(this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
+                newFieldObjectPlayer, newStepsTaken);
+
         Main.consolePrint("Moved player right, newFieldObjectPlayer=" + newFieldObjectPlayer.toString());
-        return enterPossibleBattle(new FieldWorld(
-                this.ticks, this.playerState, this.haveTreasure, this.treasureCoord,
-                newFieldObjectPlayer, newStepsTaken));
+
+        // Skip adapter function if testing
+        if (battlesEnabled) {
+            // Return the adapter
+            return enterPossibleBattle(newFw);
+        } else {
+            return newFw;
+        }
     }
 
     /**
@@ -279,7 +329,7 @@ public class FieldWorld extends World {
                 ", haveTreasure=" + haveTreasure +
                 ", stepsTaken=" + stepsTaken +
                 ", fieldObjectPlayer=" + fieldObjectPlayer +
-                ", fObjTreasure=" + fObjTreasure +
+                //", fObjTreasure=" + fObjTreasure +
                 '}';
     }
 
@@ -300,8 +350,8 @@ public class FieldWorld extends World {
         if (stepsTaken != that.stepsTaken) return false;
         if (!playerState.equals(that.playerState)) return false;
         if (!treasureCoord.equals(that.treasureCoord)) return false;
-        if (!fieldObjectPlayer.equals(that.fieldObjectPlayer)) return false;
-        return fObjTreasure.equals(that.fObjTreasure);
+        return (!fieldObjectPlayer.equals(that.fieldObjectPlayer));
+
     }
 
 }

@@ -1,5 +1,7 @@
 package me.lerichard;
 
+import tester.Tester;
+
 import java.util.Random;
 
 public class Main {
@@ -24,10 +26,10 @@ public class Main {
         BattleWorld bwTest = new BattleWorld(0, game, player, mob, true);
         Examples e = new Examples();
 
-        //Tester.run(e);
+        Tester.run(e);
 
-
-        bwTest.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
+        //start.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
+        //bwTest.bigBang(WINDOW_HEIGHT, WINDOW_WIDTH, .5);
 
         if (Main.consoleMode) {
             Main.consolePrint("WELCOME TO");
