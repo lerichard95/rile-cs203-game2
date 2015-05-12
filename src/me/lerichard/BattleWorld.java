@@ -442,12 +442,20 @@ public class BattleWorld extends World {
      * @param action
      * @param reaction
      */
-    public void actionBoard(boolean mobTurn, String action, String reaction) {
+    public WorldImage actionBoard(boolean mobTurn, String action, String reaction) {
+        Posn loc = new Posn(250,250);
         Posn actorCoord = new Posn(loc.x - 0, loc.y - 20);
+        String mobTurnLabel;
+        if (mobTurn) {
+            mobTurnLabel = "Mob's turn";
+        } else {
+            mobTurnLabel = "";
+        }
+        String actualDam = "";
 
         WorldImage line1 = new TextImage(
                 actorCoord,
-                " attacked!",
+                mobTurnLabel,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
@@ -455,7 +463,7 @@ public class BattleWorld extends World {
 
         WorldImage line2 = new TextImage(
                 new Posn(actorCoord.x, actorCoord.y + 14),
-                "[ A ] to attack",
+                action,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
@@ -463,7 +471,7 @@ public class BattleWorld extends World {
 
         WorldImage line3 = new TextImage(
                 new Posn(actorCoord.x, actorCoord.y + 14 * 2),
-                "[ D ] to defend",
+                reaction,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
@@ -471,7 +479,7 @@ public class BattleWorld extends World {
 
         WorldImage line4 = new TextImage(
                 new Posn(actorCoord.x, actorCoord.y + 14 * 3),
-                "[ P ] to heal",
+                actualDam,
                 BattleWorld.FONT_SIZE,
                 0,
                 Color.GREEN
