@@ -7,6 +7,7 @@ import javalib.worldimages.WorldImage;
 import java.awt.*;
 
 /**
+ * Actor holds the player state and the mob state, and contains functions to modify these states.
  * Created by richard on 4/15/15.
  */
 public class Actor {
@@ -128,7 +129,7 @@ public class Actor {
     }
 
     /**
-     * Returns
+     * Returns a dead Actor
      *
      * @return a dead Actor
      */
@@ -158,7 +159,7 @@ public class Actor {
     /**
      * Return a Actor that is in defense mode
      *
-     * @return
+     * @return Actor with defense mode enabled
      */
     public Actor activateDefend() {
         return new Actor(this.hitPoints, this.atkLevel, this.defPower, true, this.type, this.hpPots
@@ -168,7 +169,7 @@ public class Actor {
     /**
      * True if two Players represent the same data
      *
-     * @return boolean
+     * @return boolean true if equal
      */
     @Override
     public boolean equals(Object o) {

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.Objects;
 
 /**
+ * Battle mode state
  * Created by richard on 4/16/15.
  */
 public class BattleWorld extends World {
@@ -34,7 +35,7 @@ public class BattleWorld extends World {
      * equivalent to a die roll on FieldWorld.ATTACK_LEVEL
      * Can never hit 0, just in case 0 triggers a divide by zero error.
      *
-     * @return
+     * @return returns a random int of damage to be dealt
      */
     public static int damageAmount(int atk) {
 
@@ -52,9 +53,9 @@ public class BattleWorld extends World {
     }
 
     /**
-     * Controls main BattleWorld game logic. Exits to field and rewards player
+     * Controls main BattleWorld game logic. Exits to field and rewards player if victory. Exits to MessageWorld and a new FieldWorld if player dies.
      *
-     * @return
+     * @return World
      */
     @Override
     public World onTick() {
@@ -126,7 +127,7 @@ public class BattleWorld extends World {
     /**
      * Returns a BattleWorld reflecting what action the Mob took
      *
-     * @return BattleWorld
+     * @return BattleWorld with new player state
      */
     public World actionMob() {
         Main.consolePrint("Mob is deciding...");
@@ -151,7 +152,7 @@ public class BattleWorld extends World {
      * returns appropriate BattleWorld state based on desired player action
      *
      * @param s Keypress
-     * @return BattleWorld
+     * @return BattleWorld with updated state
      */
     @Override
     public World onKeyEvent(String s) {
@@ -241,6 +242,10 @@ public class BattleWorld extends World {
         //return new CircleImage(new Posn(10, 10), 10, Color.blue);
     }
 
+    /**
+     * Draws the panel for displaying player's turn and controls
+     * @return
+     */
     public WorldImage controlPanel() {
         // height of a line is 14
         int lineNum = 0;
@@ -299,6 +304,13 @@ public class BattleWorld extends World {
 
     }
 
+    /**
+     *
+     * @param actor Actor state to represent
+     * @param loc Location of the panel
+     * @param action Which action
+     * @return WorldImage
+     */
     public WorldImage actorAction(Actor actor, Posn loc, String action) {
         Posn actorCoord = new Posn(loc.x - 0, loc.y - 20);
 
@@ -352,6 +364,12 @@ public class BattleWorld extends World {
         }
     }
 
+    /**
+     * Draws stat panel for Actor
+     * @param actor Actor to represent
+     * @param loc Pixel location of panel
+     * @return WorldImage
+     */
     public WorldImage actorStats(Actor actor, Posn loc) {
         // height of a line is 14
         int lineNum = 0;
@@ -436,7 +454,7 @@ public class BattleWorld extends World {
     }
 
     /**
-     * Draws the board for
+     * Draws panel relaying BattleWorld action info
      *
      * @param mobTurn  flag for if
      * @param action

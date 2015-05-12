@@ -41,7 +41,7 @@ public class Pinhole extends Posn {
      * Returns true if two Pinholes represent identical points
      *
      * @param that Pinhole to be compared to
-     * @return
+     * @return true if Pinholes are identical
      */
     public boolean equals(Pinhole that) {
         return ((this.x == that.x) && (this.y == that.y));

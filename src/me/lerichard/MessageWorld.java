@@ -22,7 +22,10 @@ public class MessageWorld extends World {
         this.next = nxt;
     }
 
-    @Override
+    /**
+     * Briefly displays a message to the user
+     * @return
+     */
     public World onTick() {
         if (this.ticks < Main.SHOW_MESSAGE_FOR_N_TICKS) {
 

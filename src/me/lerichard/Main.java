@@ -41,6 +41,7 @@ public class Main {
 
     /**
      * Print to console only when consoleMode is enabled
+     * @param msg Console message to display
      */
     public static void consolePrint(String msg) {
         if (Main.consoleMode) {

@@ -7,6 +7,7 @@ import javalib.worldimages.WorldImage;
 import java.awt.*;
 
 /**
+ * General map object in FieldWorld
  * Created by richard on 4/17/15.
  */
 public class FieldObject {
@@ -21,7 +22,7 @@ public class FieldObject {
     /**
      * Returns an empty field object at the location
      *
-     * @return
+     * @return empty FieldObject with same Coord
      */
     public FieldObject empty() {
         return new FieldObject(this.myCoords, FieldObjectType.MT);
@@ -54,7 +55,7 @@ public class FieldObject {
     /**
      * Returns a WorldImage of the FieldObject
      *
-     * @return
+     * @return WorldImage
      */
     public WorldImage makeImage() {
         WorldImage output = new FrameImage(this.myCoords.toBlockPinhole(),
