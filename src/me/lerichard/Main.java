@@ -8,9 +8,9 @@ public class Main {
     public static final int SHOW_MESSAGE_FOR_N_TICKS = 1;
     public static Random RAND = new Random();
 
-    // consoleMode enables a game logic testing version of the game
-    // that does not rely on graphics.
+    // consoleMode enables the console view— way to test the game model
     public static boolean consoleMode = true;
+
     public static int WINDOW_HEIGHT = FieldWorld.MAX_FIELD_HEIGHT * FieldWorld.FIELD_OBJECT_DIAMETER;
     public static int WINDOW_WIDTH = FieldWorld.MAX_FIELD_WIDTH * FieldWorld.FIELD_OBJECT_DIAMETER;
 
